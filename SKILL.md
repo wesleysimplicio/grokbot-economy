@@ -9,7 +9,7 @@ description: >-
 ---
 # Economia de tokens para Grok Bots
 
-**Regra de ouro:** o LLM planeja, revisa e trata exceções. Quem executa é código
+**Regra permanente para todos os bots.** **Regra de ouro:** o LLM planeja, revisa e trata exceções. Quem executa é código
 determinístico (script, CLI, MCP, API). Trabalho repetido vira função Python.
 
 ## 1. Ordem de preferência (escada de custo)
@@ -82,16 +82,34 @@ Se um desses ainda não existir no box, use o próximo degrau da escada e peça 
 - Comando falhou 2× igual? Pare: `browse doctor --json` e mude a abordagem.
 - Computer use: objetivo fechado ("faça login e pare"), **um print por momento significativo** (antes de enviar, prova do envio), devolva o controle ao script logo depois.
 
-## 8. Envios a clientes (IG DM, WhatsApp Web, Gmail)
+## 8. Automação de navegador: qual ferramenta usar
+
+| Ferramenta | Quando usar | Observação |
+|---|---|---|
+| `browse` CLI | **padrão** no box para fluxos por script lendo texto/DOM (`snapshot`, `get text`, refs `@0-5`) | sessões nomeadas, reusa login; print só se o layout importa |
+| Browser Use | fluxos semiestruturados em que um agente LLM precisa decidir o caminho na página | gasta tokens por passo: use pouco e com objetivo fechado; vire script quando o fluxo estabilizar |
+| Playwright | fluxos determinísticos que vão se repetir, testes, scraping estável de site próprio/permitido | melhor alvo para "vira script" (seção 3) |
+| Selenium | fluxos simples ou legados que já existem em Selenium | não comece projeto novo nele se Playwright resolve |
+| Computer use (prints) | login, 2FA, captcha, exceções, sites que bloqueiam automação | último recurso (seção 1) |
+
+- **Proibido:** `undetected-chromedriver` (ou qualquer ferramenta de evasão anti-bot) para Instagram/WhatsApp. Evadir detecção viola os termos das plataformas e arrisca banir as contas do dono.
+- Nenhuma técnica para contornar anti-bot, captcha ou termos de uso entra em script, skill ou mensagem. Se o site bloqueia, a resposta é API oficial ou humano.
+
+## 9. Envios a clientes (IG DM, WhatsApp Web, Gmail) e postura anti-bloqueio
 
 - **Cada vídeo precisa do OK humano do dono para aquele arquivo** antes de sair. Silêncio não é aprovação.
 - Texto só de **modelo aprovado**. Mensagem que sai em nome do dono → **rascunho** para aprovação, nunca envio direto sem pedido explícito.
 - Gmail: conector MCP/API (rascunho → aprovação → envio). Nunca pelo navegador.
-- IG/WhatsApp: `browse` por script onde for seguro; computer use só em bloqueio/login/captcha.
-- **Risco real:** automação de IG/WA pode bloquear a conta. Limite de ritmo (um por vez, intervalo entre envios, teto diário), horário comercial do cliente, parar no primeiro sinal de bloqueio de ação e avisar.
+- **API oficial primeiro** onde existir: WhatsApp Business Platform (Cloud API), Instagram Graph API / Messaging API. Exige conta comercial, modelos aprovados pela Meta e regras de opt-in: confira antes de usar.
+- Sem API disponível: automação **conservadora** com `browse` sobre a sessão já logada:
+  - ritmo humano (um envio por vez, intervalo de minutos entre envios), teto diário baixo, horário comercial do cliente;
+  - **nada de envio em massa**; uma mensagem individual por empresa;
+  - aprovação humana de **cada** envio;
+  - **pare no primeiro aviso** (bloqueio de ação, challenge, verificação, captcha, "atividade incomum") e entregue a um humano. Não tente de novo, não troque de conta.
+- **Risco real:** automação de IG/WA pode bloquear a conta. Diga isso a quem pede o envio.
 - Idempotência: antes de enviar, confira se o vídeo já está na conversa. Se está, **não reenvie**.
 
-## 9. Modelos, cache e reuso
+## 10. Modelos, cache e reuso
 
 - **Hooks aprovados por setor**: reuse; não gere hook novo para cada cliente.
 - **Áudio TTS aprovado** (WAVs + `timing.lock.json`): refazer visual = **zero** TTS. O cache por hash evita chamada repetida.
@@ -99,21 +117,21 @@ Se um desses ainda não existir no box, use o próximo degrau da escada e peça 
 - **Trilha musical em rodízio:** nenhuma trilha se repete dentro de cada bloco de 15 vídeos (registre a trilha usada).
 - **Mensagens:** 1ª mensagem = `Your video is ready, here's the preview.` + mp4 (ou o modelo aprovado do idioma); **um** lembrete em D+3; **nunca preço** em mensagem proativa.
 
-## 10. Guardas de cota e dinheiro (não negociável)
+## 11. Guardas de cota e dinheiro (não negociável)
 
 - **Nunca gaste crédito pago sem OK explícito do dono**: TTS além da cota, créditos de clipping, anúncios, renders pagos (Colab/Kaggle pago), compras.
 - Respeite arquivos de trava de cota (ex.: `/workspace/controle/tts-bloqueado-ate.txt`). Data futura = porta fechada.
 - Erro 429/cota: pare **todo** uso daquele recurso, grave a hora de retomada no arquivo de trava, siga com o que não depende dele.
 - Nunca troque de chave/projeto/conta para "contornar" cota. Nunca imprima nem copie credenciais.
 
-## 11. Segurança barata de arquivos
+## 12. Segurança barata de arquivos
 
 - `--dry-run` primeiro em tudo que escreve. Teste em **cópia** (`/tmp/...`) antes do arquivo vivo.
 - Backup → escreve no temporário → troca atômica (`mv tmp final`).
 - Edição pequena (diff/linha) em vez de reescrever o arquivo inteiro.
 - Pegue lock antes de mexer em item compartilhado; solte ao terminar.
 
-## 12. Mensagens entre bots
+## 13. Mensagens entre bots
 
 - Curta: `[Projeto/Item] o que mudou · o que preciso · onde está (caminho)`.
 - Sem repetir contexto: aponte o arquivo (`ver /workspace/controle/estado-fila.md §1.5`).
@@ -121,13 +139,13 @@ Se um desses ainda não existir no box, use o próximo degrau da escada e peça 
 - Junte vários itens numa mensagem só. Nada de mensagem só de "ok/recebido/obrigado".
 - Resumo em vez de transcrição; logs vão para arquivo, a mensagem leva o caminho.
 
-## 13. Modelo e delegação
+## 14. Modelo e delegação
 
 - Tarefa mecânica (renomear, registrar, rodar lote, formatar) → esforço baixo / modelo barato.
 - Esforço alto só para julgamento: aprovação, texto novo, exceção, decisão legal.
 - Trabalho longo (render, lote, upload grande) → background ou subagente; não segure o turno esperando.
 
-## 14. Métrica
+## 15. Métrica
 
 Registre tokens/custo por tarefa quando possível:
 
@@ -139,7 +157,7 @@ python3 scripts/token_log.py summary   # total por caminho
 
 Revise o resumo: se `computer-use` ou `browse` dominam, há script faltando (volte à seção 3).
 
-## 15. O que desperdiça tokens (anti-padrões)
+## 16. O que desperdiça tokens (anti-padrões)
 
 - Abrir o navegador para algo que tem MCP/API/script.
 - Screenshot a cada clique; assistir vídeo para QA em vez de script.
@@ -150,8 +168,9 @@ Revise o resumo: se `computer-use` ou `browse` dominam, há script faltando (vol
 - Mensagens longas entre bots repetindo contexto; acks vazios.
 - Fazer a mesma coisa à mão pela 3ª vez.
 - Modelo caro/esforço alto para tarefa mecânica.
+- Insistir num site que bloqueou (ou tentar evadir anti-bot) em vez de usar a API oficial ou chamar um humano.
 
-## 16. Fluxo de decisão
+## 17. Fluxo de decisão
 
 ```mermaid
 flowchart TD
@@ -170,3 +189,12 @@ flowchart TD
   R --> L[Registrar no token_log; relatar só falhas]
   G --> L
 ```
+
+## 18. Manutenção (regra permanente)
+
+Esta skill vale para **todos os bots, sempre**. Ela só funciona se ficar atualizada:
+
+- Surgiu um caminho mais barato (script novo, conector MCP, API, plugin, flag nova de CLI)? **Atualize a skill**: abra um PR no repositório `grokbot-economy` com a mudança no `SKILL.md` e uma linha no `CHANGELOG.md` (data, o que mudou, por quê, economia estimada).
+- Caminho que ficou obsoleto ou quebrou: remova ou corrija no mesmo PR.
+- Mudança pequena e objetiva; nada de dados sensíveis (tokens, e-mails, telefones, IDs de arquivo, nomes de clientes, URLs internas). Use placeholders como `<DRIVE_FILE_ID>`.
+- Sem acesso ao GitHub? Peça ao bot dev ou ao coordenador para abrir o PR com o texto pronto.
