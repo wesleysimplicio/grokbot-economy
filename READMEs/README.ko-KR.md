@@ -54,7 +54,7 @@ skill 자체(`SKILL.md`)와 저장소의 나머지 파일은 영어로 작성되
 | 3 | Plugin/skill | 미리 만들어진 서드파티 레시피 |
 | 4 | API | 커넥터가 없는 서비스 |
 | 5 | `browse` CLI (text/DOM) | API가 없는 사이트(텍스트로 읽기) |
-| 6 | Computer use (screenshots) | 로그인, 2FA, captcha, 예외, 자동화를 차단하는 사이트에만 |
+| 6 | Computer use (screenshots) | 로그인(2FA는 사람이 완료), 예외, API나 스크립트 가능한 DOM이 없는 UI에만. captcha/안티봇 차단 → 멈추고 사람에게 넘기거나 공식 API 사용 |
 
 - **LLM은 계획하고 코드는 실행한다.** 두 번 나온 작업은 `--dry-run`, 멱등성, 테스트를 갖춘 스크립트로 만든다.
 - **브라우저 전 체크리스트:** 스크립트? 커넥터? 플러그인? API? `browse`로 텍스트 기반 처리가 가능한가?

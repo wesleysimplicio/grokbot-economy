@@ -54,7 +54,7 @@ Depois, chame com `/grokbot-economy` ou cite em rotinas. A descrição faz os bo
 | 3 | Plugin/skill | receitas prontas de terceiros |
 | 4 | API | serviços sem conector |
 | 5 | `browse` CLI (text/DOM) | sites sem API, lidos como texto |
-| 6 | Computer use (screenshots) | só login, 2FA, captcha, exceções, sites que bloqueiam automação |
+| 6 | Computer use (screenshots) | só login (um humano conclui o 2FA), exceções, UIs sem API nem DOM automatizável; captcha/bloqueio anti-bot → pare e passe para um humano, ou use a API oficial |
 
 - **O LLM planeja; o código executa.** Tarefa vista 2 vezes vira script com `--dry-run`, idempotência e teste.
 - **Checklist antes do navegador:** script? conector? plugin? API? o `browse` resolve por texto?

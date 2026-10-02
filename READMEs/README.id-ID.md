@@ -54,7 +54,7 @@ Lalu panggil dengan `/grokbot-economy` atau sebut dalam rutinitas. Deskripsinya 
 | 3 | Plugin/skill | resep siap pakai dari pihak ketiga |
 | 4 | API | layanan tanpa konektor |
 | 5 | `browse` CLI (text/DOM) | situs tanpa API, dibaca sebagai teks |
-| 6 | Computer use (screenshots) | hanya login, 2FA, captcha, pengecualian, situs yang memblokir otomatisasi |
+| 6 | Computer use (screenshots) | hanya login (manusia menyelesaikan 2FA), pengecualian, UI tanpa API atau DOM yang bisa diskrip; captcha/blokir anti-bot → berhenti dan serahkan ke manusia, atau gunakan API resmi |
 
 - **LLM merencanakan; kode mengeksekusi.** Tugas yang muncul dua kali menjadi skrip dengan `--dry-run`, idempoten, dan tes.
 - **Checklist sebelum browser:** skrip? konektor? plugin? API? bisakah `browse` melakukannya lewat teks?

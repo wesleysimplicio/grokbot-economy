@@ -54,7 +54,7 @@ Then invoke it with `/grokbot-economy` or mention it in routines. Its descriptio
 | 3 | Plugin/skill | ready-made third-party recipes |
 | 4 | API | services without a connector |
 | 5 | `browse` CLI (text/DOM) | sites without an API, read as text |
-| 6 | Computer use (screenshots) | only sign-in, 2FA, captcha, exceptions, sites that block automation |
+| 6 | Computer use (screenshots) | only sign-in (a human completes 2FA), exceptions, UIs with no API or scriptable DOM; captcha/anti-bot block → stop and hand off to a human, or use the official API |
 
 - **The LLM plans; code executes.** A task seen twice becomes a script with `--dry-run`, idempotency and a test.
 - **Pre-browser checklist:** script? connector? plugin? API? can `browse` do it by text?

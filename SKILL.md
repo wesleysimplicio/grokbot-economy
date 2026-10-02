@@ -16,6 +16,8 @@ description: >-
 
 Step down a rung only when the one above cannot do it. Note why.
 
+**Captcha / anti-bot block → stop and hand off to a human, or use the official API.** Computer use is never a way to defeat a block.
+
 | # | Path | Typical cost | Use for |
 |---|---|---|---|
 | 1 | Ready script/CLI (`fila.py`, `simplicio-video`, `pc.py`) | ~0 tokens beyond the command + short output | anything that already has a script |
@@ -23,7 +25,7 @@ Step down a rung only when the one above cannot do it. Note why.
 | 3 | Installed plugin/skill (e.g. `browse skills find <site>`) | low | ready-made third-party recipe |
 | 4 | Direct API (REST via `curl`/Python, `gh api`) | low/medium | when there is no MCP |
 | 5 | Scripted browser: `browse` CLI reading text/DOM (`snapshot`, `get text`, `get markdown`) | medium | sites without an API; **no screenshots** |
-| 6 | Computer use with screenshots | **high** (every screenshot is expensive) | **only** sign-in, 2FA, captcha, exceptions and sites that block automation |
+| 6 | Computer use with screenshots | **high** (every screenshot is expensive) | **only** sign-in (a human completes 2FA), exceptions, and UIs with no API or scriptable DOM |
 
 ## 2. Pre-browser checklist (mandatory)
 
@@ -34,7 +36,8 @@ Before any `browse open` or computer-use subagent, answer:
 3. Is there a plugin/skill? → `browse skills find <domain>`.
 4. Is there an API? → `gh api`, the service's REST API, `UploadFile`/`DownloadFile`.
 5. Can the `browse` CLI do it by text? → `browse snapshot` / `browse get text body`.
-6. Only then: computer use, with a closed goal and few screenshots.
+6. Only then: computer use, with a closed goal and few screenshots (sign-in with a human completing 2FA, exceptions, UIs with no API or scriptable DOM).
+7. Hit a captcha or anti-bot block at any point? Stop and hand off to a human, or use the official API.
 
 If any of 1–5 is "yes", **do not open the browser**.
 
@@ -99,7 +102,7 @@ If one of these does not exist on the box yet, use the next rung of the ladder a
 | Browser Use | semi-structured flows where an LLM agent must decide the path on the page | spends tokens per step: use sparingly with a closed goal; script it once the flow stabilizes |
 | Playwright | deterministic flows that will repeat, tests, stable scraping of own/permitted sites | best target for "turn it into a script" (section 3) |
 | Selenium | simple or legacy flows that already exist in Selenium | do not start new projects in it if Playwright works |
-| Computer use (screenshots) | sign-in, 2FA, captcha, exceptions, sites that block automation | last resort (section 1) |
+| Computer use (screenshots) | sign-in (a human completes 2FA), exceptions, UIs with no API or scriptable DOM | last resort (section 1); never to get past a captcha or anti-bot block |
 
 - **Forbidden:** `undetected-chromedriver` (or any anti-bot evasion tool) for Instagram/WhatsApp. Evading detection breaks the platforms' terms and risks banning the owner's accounts.
 - No technique for bypassing anti-bot systems, captchas or terms of service goes into any script, skill or message. If a site blocks you, the answer is the official API or a human.
@@ -192,8 +195,10 @@ flowchart TD
   D -- yes --> R
   D -- no --> E{browse CLI by text/DOM?}
   E -- yes --> R
-  E -- no --> F{Sign-in, 2FA, captcha, block?}
-  F -- yes --> G[Computer use: closed goal, few screenshots]
+  E -- no --> K{Captcha or anti-bot block?}
+  K -- yes --> HU[Stop: hand off to a human or use the official API]
+  K -- no --> F{Sign-in, exception, or UI with no API/DOM?}
+  F -- yes --> G[Computer use: closed goal, few screenshots; human completes 2FA]
   F -- no --> H[Stop and ask the dev bot for a script]
   R --> L[Log in token_log; report failures only]
   G --> L

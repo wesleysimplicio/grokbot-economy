@@ -54,7 +54,7 @@ skill 本身（`SKILL.md`）和仓库的其余内容均为英文。只有本 REA
 | 3 | Plugin/skill | 现成的第三方方案 |
 | 4 | API | 没有连接器的服务 |
 | 5 | `browse` CLI (text/DOM) | 没有 API 的网站（按文本读取） |
-| 6 | Computer use (screenshots) | 仅限登录、2FA、验证码、异常情况、阻止自动化的网站 |
+| 6 | Computer use (screenshots) | 仅限登录（由人完成 2FA）、异常情况、没有 API 或可脚本化 DOM 的界面；遇到验证码/反机器人拦截 → 停止并交给人处理，或使用官方 API |
 
 - **LLM 规划，代码执行。** 出现两次的任务就写成带 `--dry-run`、幂等性和测试的脚本。
 - **打开浏览器前的检查清单：** 有脚本吗？有连接器吗？有插件吗？有 API 吗？`browse` 能按文本完成吗？
