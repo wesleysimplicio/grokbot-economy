@@ -52,11 +52,20 @@ Se a resposta 1–5 for "sim", **não abra o navegador**.
 | Planilha de controle (`controle-vendas-videos.xlsx`) | `fila.py proximo --pais <país> --todos`, `fila.py ver P0XX`, `fila.py marcar P0XX --status "..." --obs "..."`, `fila.py lock/unlock` | abrir/editar a planilha à mão ou com openpyxl ad hoc |
 | Registrar um passo (planilha + Paperclip juntos) | `registrar.py` (um comando só) | dois registros manuais separados |
 | Board de coordenação (Paperclip) | `pc.py` (helper REST) | abrir a UI no navegador para comentar |
-| Vídeos | `simplicio-video` (`validate`, `voice`, `render`, `run`...); o comando exato do final sem marca d'água está no `FINAL-COMANDO.md` da pasta do prospect | montar comando de render de cabeça |
+| Vídeos | `simplicio-video` (`validate`, `voice`, `render`, `broll <pasta> --check` em segundos antes de renderizar); o comando exato do final sem marca d'água está no `FINAL-COMANDO.md` da pasta do prospect | montar comando de render de cabeça |
 | QA de vídeo | `qa_v2.sh` + **uma** olhada no contact sheet | assistir o vídeo várias vezes / dezenas de prints |
 | Drive / Gmail | `gapi.py` (OAuth: upload Drive, Gmail leitura) ou conector MCP Drive/Gmail, `UploadFile`/`DownloadFile` | Drive web pelo navegador |
 
 Se um desses ainda não existir no box, use o próximo degrau da escada e peça ao bot dev para criá-lo.
+
+### Exemplos rápidos (❌ caro → ✅ barato; detalhes em `examples/fluxos.md`)
+
+- **Planilha:** ❌ abrir o xlsx/Sheets e editar célula → ✅ `fila.py marcar P0XX --status "..." --obs "..."` (ou `registrar.py` para planilha + board).
+- **Drive:** ❌ Drive web com prints → ✅ busca do conector Drive em `<DRIVE_FOLDER_ID>` (já existe?) e `UploadFile`/`gapi.py` só se faltar.
+- **Paperclip:** ❌ abrir o board no navegador → ✅ `pc.py` lê os últimos N comentários e posta 1 linha com o caminho da prova.
+- **Vídeo:** ❌ montar o render de cabeça e assistir 3× → ✅ `broll --check`, depois o comando exato do `FINAL-COMANDO.md`, `qa_v2.sh` + 1 contact sheet.
+- **Gmail:** ❌ Gmail web → ✅ conector MCP: rascunho → OK humano → envio.
+- **IG/WhatsApp:** ❌ computer use clicando conversa por conversa → ✅ API oficial; sem ela, `browse` na sessão já logada, 1 envio aprovado por vez.
 
 ## 5. Lotes: CSV/JSON + script, nunca campo a campo
 

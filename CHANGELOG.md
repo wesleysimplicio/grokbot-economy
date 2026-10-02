@@ -8,3 +8,5 @@ Formato: `AAAA-MM-DD · o que mudou · por quê · economia estimada`.
 - Seção de ferramentas de automação de navegador (browse CLI, Browser Use, Playwright, Selenium) e proibição de ferramentas de evasão anti-bot em Instagram/WhatsApp.
 - Postura anti-bloqueio para IG/WhatsApp: API oficial primeiro; senão automação conservadora com aprovação humana de cada envio.
 - Regra permanente de Manutenção: caminho mais barato novo → PR neste repo + linha neste arquivo.
+- Exemplos rápidos (caro → barato) no `SKILL.md` §4 e `simplicio-video broll --check` antes de renderizar.
+- README em 15 idiomas no padrão dos outros repositórios do dono (`README.md` + `READMEs/README.<locale>.md`), banner em `assets/banner.png`.
