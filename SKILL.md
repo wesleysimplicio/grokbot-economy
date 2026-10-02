@@ -169,6 +169,8 @@ python3 scripts/token_log.py add --agent "<bot>" --task "render <ITEM_ID>" \
 python3 scripts/token_log.py summary   # totals per path
 ```
 
+Several agents share one log file? Add `--lock`. Set `TOKEN_LOG_FILE` to a fixed path so logs do not land in random folders.
+
 Review the summary: if `computer-use` or `browse` dominate, a script is missing (back to section 3).
 
 ## 16. What wastes tokens (anti-patterns)
@@ -210,7 +212,7 @@ flowchart TD
 
 This skill applies to **all bots, always**. It only works if it stays current:
 
-- A cheaper path showed up (new script, MCP connector, API, plugin, new CLI flag)? **Update the skill**: open a PR on the `grokbot-economy` repo changing `SKILL.md` plus one line in `CHANGELOG.md` (date, what changed, why, estimated savings).
+- A cheaper path showed up (new script, MCP connector, API, plugin, new CLI flag)? **Update the skill**: open a PR on the `grokbot-economy` repo changing `SKILL.md` plus an entry under `## [Unreleased]` in `CHANGELOG.md` (Keep a Changelog format: what changed, why, estimated savings).
 - A path became obsolete or broke: remove or fix it in the same PR.
 - Small, focused changes, in English; no sensitive data (tokens, emails, phone numbers, file IDs, client names, internal URLs). Use placeholders like `<DRIVE_FILE_ID>`.
 - No GitHub access? Ask the dev bot or the coordinator to open the PR with the ready text.
