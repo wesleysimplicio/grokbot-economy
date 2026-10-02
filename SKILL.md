@@ -1,209 +1,209 @@
 ---
 name: grokbot-economy
 description: >-
-  Use no início de qualquer tarefa, antes de abrir o navegador ou o computer use,
-  antes de repetir uma tarefa pela 2ª vez, antes de processar lotes, e ao escrever
-  mensagens para outros bots. Faz o trabalho pelo caminho pronto e determinístico
-  mais barato (script/CLI > MCP > plugin > API > browse CLI > computer use) para
-  gastar menos tokens e dinheiro.
+  Use at the start of any task, before opening the browser or computer use,
+  before repeating a task a 2nd time, before processing a batch, and when
+  writing messages to other bots. Do the work through the cheapest ready-made,
+  deterministic path (script/CLI > MCP > plugin > API > browse CLI > computer
+  use) to spend fewer tokens and less money.
 ---
-# Economia de tokens para Grok Bots
+# Token economy for Grok Bots
 
-**Regra permanente para todos os bots.** **Regra de ouro:** o LLM planeja, revisa e trata exceções. Quem executa é código
-determinístico (script, CLI, MCP, API). Trabalho repetido vira função Python.
+**Permanent rule for all bots.** **Golden rule:** the LLM plans, reviews and handles exceptions. Deterministic code
+(script, CLI, MCP, API) does the work. Repeated work becomes a Python function.
 
-## 1. Ordem de preferência (escada de custo)
+## 1. Preference order (cost ladder)
 
-Desça um degrau só quando o de cima não resolve. Anote o motivo.
+Step down a rung only when the one above cannot do it. Note why.
 
-| # | Caminho | Custo típico | Use para |
+| # | Path | Typical cost | Use for |
 |---|---|---|---|
-| 1 | Script/CLI pronto (`fila.py`, `simplicio-video`, `pc.py`) | ~0 tokens além do comando + saída curta | tudo que já tem script |
-| 2 | Conector MCP (Drive, Gmail, GitHub, Calendar) | baixo, saída estruturada | ler/buscar/criar em serviços conectados |
-| 3 | Plugin/skill instalado (ex.: `browse skills find <site>`) | baixo | receita pronta de terceiros |
-| 4 | API direta (REST via `curl`/Python, `gh api`) | baixo/médio | quando não há MCP |
-| 5 | Navegador por script: `browse` CLI lendo texto/DOM (`snapshot`, `get text`, `get markdown`) | médio | sites sem API; **sem prints** |
-| 6 | Computer use com screenshots | **alto** (cada print custa caro) | **só** login, 2FA, captcha, exceções e sites que bloqueiam automação |
+| 1 | Ready script/CLI (`fila.py`, `simplicio-video`, `pc.py`) | ~0 tokens beyond the command + short output | anything that already has a script |
+| 2 | MCP connector (Drive, Gmail, GitHub, Calendar) | low, structured output | read/search/create in connected services |
+| 3 | Installed plugin/skill (e.g. `browse skills find <site>`) | low | ready-made third-party recipe |
+| 4 | Direct API (REST via `curl`/Python, `gh api`) | low/medium | when there is no MCP |
+| 5 | Scripted browser: `browse` CLI reading text/DOM (`snapshot`, `get text`, `get markdown`) | medium | sites without an API; **no screenshots** |
+| 6 | Computer use with screenshots | **high** (every screenshot is expensive) | **only** sign-in, 2FA, captcha, exceptions and sites that block automation |
 
-## 2. Checklist antes do navegador (obrigatório)
+## 2. Pre-browser checklist (mandatory)
 
-Antes de qualquer `browse open` ou subagente de computer use, responda:
+Before any `browse open` or computer-use subagent, answer:
 
-1. Existe script/CLI? → `ls /workspace/controle/scripts`, `rg -l '<tarefa>' /workspace/controle`, `<cli> --help`.
-2. Existe conector MCP? → descubra as tools do servidor e use.
-3. Existe plugin/skill? → `browse skills find <domínio>`.
-4. Existe API? → `gh api`, REST do serviço, `UploadFile`/`DownloadFile`.
-5. O `browse` CLI resolve por texto? → `browse snapshot` / `browse get text body`.
-6. Só então: computer use, com objetivo fechado e poucos prints.
+1. Is there a script/CLI? → `ls <scripts-dir>`, `rg -l '<task>' <runbook-dir>`, `<cli> --help`.
+2. Is there an MCP connector? → discover the server's tools and use them.
+3. Is there a plugin/skill? → `browse skills find <domain>`.
+4. Is there an API? → `gh api`, the service's REST API, `UploadFile`/`DownloadFile`.
+5. Can the `browse` CLI do it by text? → `browse snapshot` / `browse get text body`.
+6. Only then: computer use, with a closed goal and few screenshots.
 
-Se a resposta 1–5 for "sim", **não abra o navegador**.
+If any of 1–5 is "yes", **do not open the browser**.
 
-## 3. Regra "vira script"
+## 3. "Turn it into a script" rule
 
-- A mesma tarefa apareceu **2 vezes**? Pare. Escreva ou estenda um script (ou peça ao bot dev).
-- Todo script novo tem: `--help`, `--dry-run`, idempotência (rodar 2× não duplica), `--selftest` ou teste, saída curta (só o essencial e as falhas).
-- Documente no runbook (1 linha: comando + quando usar). Script não documentado não existe para o próximo agente.
-- Prefira **estender** um script existente a criar outro parecido.
+- Same task showed up **twice**? Stop. Write or extend a script (or ask the dev bot).
+- Every new script has: `--help`, `--dry-run`, idempotency (running twice does not duplicate), `--selftest` or a test, short output (essentials and failures only).
+- Document it in the runbook (1 line: command + when to use it). An undocumented script does not exist for the next agent.
+- Prefer **extending** an existing script over creating a similar one.
 
-## 4. Scripts do nosso fluxo (exemplos reais; confira `--help` antes)
+## 4. Scripts in our flow (real examples; check `--help` first)
 
-| Tarefa | Caminho pronto | Nunca |
+| Task | Ready path | Never |
 |---|---|---|
-| Planilha de controle (`controle-vendas-videos.xlsx`) | `fila.py proximo --pais <país> --todos`, `fila.py ver P0XX`, `fila.py marcar P0XX --status "..." --obs "..."`, `fila.py lock/unlock` | abrir/editar a planilha à mão ou com openpyxl ad hoc |
-| Registrar um passo (planilha + Paperclip juntos) | `registrar.py` (um comando só) | dois registros manuais separados |
-| Board de coordenação (Paperclip) | `pc.py` (helper REST) | abrir a UI no navegador para comentar |
-| Vídeos | `simplicio-video` (`validate`, `voice`, `render`, `broll <pasta> --check` em segundos antes de renderizar); o comando exato do final sem marca d'água está no `FINAL-COMANDO.md` da pasta do prospect | montar comando de render de cabeça |
-| QA de vídeo | `qa_v2.sh` + **uma** olhada no contact sheet | assistir o vídeo várias vezes / dezenas de prints |
-| Drive / Gmail | `gapi.py` (OAuth: upload Drive, Gmail leitura) ou conector MCP Drive/Gmail, `UploadFile`/`DownloadFile` | Drive web pelo navegador |
+| Control spreadsheet | `fila.py proximo --pais <country> --todos`, `fila.py ver P0XX`, `fila.py marcar P0XX --status "..." --obs "..."`, `fila.py lock/unlock` (the only way to edit it) | edit the spreadsheet by hand or with ad hoc openpyxl |
+| Record a step (spreadsheet + Paperclip together) | `registrar.py` (one command) | two separate manual records |
+| Coordination board (Paperclip) | `pc.py` (REST helper) | open the UI in the browser to comment |
+| Videos | `simplicio-video` (`validate`, `voice`, `render`, `broll <dir> --check` in seconds before rendering); the exact watermark-free final command lives in the prospect folder's `FINAL-COMANDO.md` | build a render command from memory |
+| Video QA | `qa_v2.sh` + **one** look at the contact sheet | watching the video several times / dozens of screenshots |
+| Drive / Gmail | `gapi.py` (OAuth: Drive upload, Gmail read-only) or the Drive/Gmail MCP connector, `UploadFile`/`DownloadFile` | Drive web in the browser |
 
-Se um desses ainda não existir no box, use o próximo degrau da escada e peça ao bot dev para criá-lo.
+If one of these does not exist on the box yet, use the next rung of the ladder and ask the dev bot to build it.
 
-### Exemplos rápidos (❌ caro → ✅ barato; detalhes em `examples/fluxos.md`)
+### Quick examples (❌ expensive → ✅ cheap; details in `examples/flows.md`)
 
-- **Planilha:** ❌ abrir o xlsx/Sheets e editar célula → ✅ `fila.py marcar P0XX --status "..." --obs "..."` (ou `registrar.py` para planilha + board).
-- **Drive:** ❌ Drive web com prints → ✅ busca do conector Drive em `<DRIVE_FOLDER_ID>` (já existe?) e `UploadFile`/`gapi.py` só se faltar.
-- **Paperclip:** ❌ abrir o board no navegador → ✅ `pc.py` lê os últimos N comentários e posta 1 linha com o caminho da prova.
-- **Vídeo:** ❌ montar o render de cabeça e assistir 3× → ✅ `broll --check`, depois o comando exato do `FINAL-COMANDO.md`, `qa_v2.sh` + 1 contact sheet.
-- **Gmail:** ❌ Gmail web → ✅ conector MCP: rascunho → OK humano → envio.
-- **IG/WhatsApp:** ❌ computer use clicando conversa por conversa → ✅ API oficial; sem ela, `browse` na sessão já logada, 1 envio aprovado por vez.
+- **Spreadsheet:** ❌ open the xlsx/Sheets and edit cells → ✅ `fila.py marcar P0XX --status "..." --obs "..."` (or `registrar.py` for spreadsheet + board).
+- **Drive:** ❌ Drive web with screenshots → ✅ Drive connector search in `<DRIVE_FOLDER_ID>` (already there?) and `UploadFile`/`gapi.py` only if missing.
+- **Paperclip:** ❌ open the board in the browser → ✅ `pc.py` reads the last N comments and posts 1 line with the proof path.
+- **Video:** ❌ build the render by hand and watch it 3× → ✅ `broll --check`, then the exact command from `FINAL-COMANDO.md`, `qa_v2.sh` + 1 contact sheet.
+- **Gmail:** ❌ Gmail web → ✅ MCP connector: draft → human OK → send.
+- **IG/WhatsApp:** ❌ computer use clicking chat by chat → ✅ official API; without it, `browse` on the signed-in session, 1 approved send at a time.
 
-## 5. Lotes: CSV/JSON + script, nunca campo a campo
+## 5. Batches: CSV/JSON + script, never field by field
 
-- Gere um CSV/JSON com todas as linhas e processe com um script. Nunca digite campo por campo numa UI.
-- Fluxo de prospects: `lista.csv` → **lote fichas** → **lote voz** → **lote visual + render**.
-- Pare no primeiro erro de cota; siga só com o que não depende dela.
-- Relate **só as falhas** (`3/40 falharam: P0XX voz 429, ...`), nunca a lista inteira de sucessos.
+- Build a CSV/JSON with every row and process it with a script. Never type field by field into a UI.
+- Prospect flow: `list.csv` → **fichas (prospect sheets) batch** → **voice batch** → **visual batch + render**.
+- Stop at the first quota error; continue only with what does not depend on it.
+- Report **only failures** (`3/40 failed: P0XX voice 429, ...`), never the full list of successes.
 
-## 6. Ler e buscar sem desperdício
+## 6. Read and search without waste
 
-- Busque com `rg -n '<termo>' <pasta>`; leia com `Read` usando `offset`/`limit` só no trecho achado.
-- Nunca despeje arquivo inteiro (`cat` de 500 linhas, `--full`, JSON gigante). Use `jq`, `rg -m`, `wc -l` primeiro.
-- Não releia o que já leu nesta tarefa. Anote o fato e siga.
-- Sem `sleep`/polling em loop. Rode em background e espere a notificação de término (`AwaitShell` só quando bloqueado).
-- Saída de comando: filtre (`--jq`, `rg`, `tail` do log de erro), não traga logs inteiros para o contexto.
+- Search with `rg -n '<term>' <dir>`; read with `Read` using `offset`/`limit` only around the hit.
+- Never dump a whole file (`cat` of 500 lines, `--full`, giant JSON). Use `jq`, `rg -m`, `wc -l` first.
+- Do not re-read what you already read in this task. Note the fact and move on.
+- No `sleep`/polling loops. Run in the background and wait for the completion notice (`AwaitShell` only when blocked).
+- Command output: filter it (`--jq`, `rg`, `tail` of the error log); do not pull whole logs into context.
 
-## 7. Navegador barato (quando não tem jeito)
+## 7. Cheap browser (when there is no other way)
 
-- `browse` CLI primeiro: `browse open <url> --session <tarefa>` → `browse snapshot` → `browse click @0-5` → `browse snapshot`. Refs mudam a cada snapshot.
-- Leia por texto: `browse get text body`, `browse get markdown "#main"`. Print só quando o layout importa.
-- Reuse sessões e logins já abertos (Chrome do box, `--auto-connect` quando for intencional, contexts). Nunca deslogue nem troque de conta.
-- Um `--session` por tarefa paralela; `browse stop --session <nome>` ao terminar.
-- Comando falhou 2× igual? Pare: `browse doctor --json` e mude a abordagem.
-- Computer use: objetivo fechado ("faça login e pare"), **um print por momento significativo** (antes de enviar, prova do envio), devolva o controle ao script logo depois.
+- `browse` CLI first: `browse open <url> --session <task>` → `browse snapshot` → `browse click @0-5` → `browse snapshot`. Refs change on every snapshot.
+- Read by text: `browse get text body`, `browse get markdown "#main"`. Screenshot only when layout matters.
+- Reuse sessions and logins that are already open (box Chrome, `--auto-connect` when intended, contexts). Never sign out or switch accounts.
+- One `--session` per parallel task; `browse stop --session <name>` when done.
+- Same command failed twice? Stop: `browse doctor --json` and change approach.
+- Computer use: closed goal ("sign in and stop"), **one screenshot per meaningful moment** (before sending, proof of the send), then hand control back to the script.
 
-## 8. Automação de navegador: qual ferramenta usar
+## 8. Browser automation: which tool to use
 
-| Ferramenta | Quando usar | Observação |
+| Tool | When to use | Note |
 |---|---|---|
-| `browse` CLI | **padrão** no box para fluxos por script lendo texto/DOM (`snapshot`, `get text`, refs `@0-5`) | sessões nomeadas, reusa login; print só se o layout importa |
-| Browser Use | fluxos semiestruturados em que um agente LLM precisa decidir o caminho na página | gasta tokens por passo: use pouco e com objetivo fechado; vire script quando o fluxo estabilizar |
-| Playwright | fluxos determinísticos que vão se repetir, testes, scraping estável de site próprio/permitido | melhor alvo para "vira script" (seção 3) |
-| Selenium | fluxos simples ou legados que já existem em Selenium | não comece projeto novo nele se Playwright resolve |
-| Computer use (prints) | login, 2FA, captcha, exceções, sites que bloqueiam automação | último recurso (seção 1) |
+| `browse` CLI | **default** on the box for scripted text/DOM flows (`snapshot`, `get text`, refs `@0-5`) | named sessions, reuses logins; screenshot only if layout matters |
+| Browser Use | semi-structured flows where an LLM agent must decide the path on the page | spends tokens per step: use sparingly with a closed goal; script it once the flow stabilizes |
+| Playwright | deterministic flows that will repeat, tests, stable scraping of own/permitted sites | best target for "turn it into a script" (section 3) |
+| Selenium | simple or legacy flows that already exist in Selenium | do not start new projects in it if Playwright works |
+| Computer use (screenshots) | sign-in, 2FA, captcha, exceptions, sites that block automation | last resort (section 1) |
 
-- **Proibido:** `undetected-chromedriver` (ou qualquer ferramenta de evasão anti-bot) para Instagram/WhatsApp. Evadir detecção viola os termos das plataformas e arrisca banir as contas do dono.
-- Nenhuma técnica para contornar anti-bot, captcha ou termos de uso entra em script, skill ou mensagem. Se o site bloqueia, a resposta é API oficial ou humano.
+- **Forbidden:** `undetected-chromedriver` (or any anti-bot evasion tool) for Instagram/WhatsApp. Evading detection breaks the platforms' terms and risks banning the owner's accounts.
+- No technique for bypassing anti-bot systems, captchas or terms of service goes into any script, skill or message. If a site blocks you, the answer is the official API or a human.
 
-## 9. Envios a clientes (IG DM, WhatsApp Web, Gmail) e postura anti-bloqueio
+## 9. Sends to clients (IG DM, WhatsApp Web, Gmail) and anti-block posture
 
-- **Cada vídeo precisa do OK humano do dono para aquele arquivo** antes de sair. Silêncio não é aprovação.
-- Texto só de **modelo aprovado**. Mensagem que sai em nome do dono → **rascunho** para aprovação, nunca envio direto sem pedido explícito.
-- Gmail: conector MCP/API (rascunho → aprovação → envio). Nunca pelo navegador.
-- **API oficial primeiro** onde existir: WhatsApp Business Platform (Cloud API), Instagram Graph API / Messaging API. Exige conta comercial, modelos aprovados pela Meta e regras de opt-in: confira antes de usar.
-- Sem API disponível: automação **conservadora** com `browse` sobre a sessão já logada:
-  - ritmo humano (um envio por vez, intervalo de minutos entre envios), teto diário baixo, horário comercial do cliente;
-  - **nada de envio em massa**; uma mensagem individual por empresa;
-  - aprovação humana de **cada** envio;
-  - **pare no primeiro aviso** (bloqueio de ação, challenge, verificação, captcha, "atividade incomum") e entregue a um humano. Não tente de novo, não troque de conta.
-- **Risco real:** automação de IG/WA pode bloquear a conta. Diga isso a quem pede o envio.
-- Idempotência: antes de enviar, confira se o vídeo já está na conversa. Se está, **não reenvie**.
+- **Every video needs the owner's human OK for that file** before it goes out. Silence is not approval.
+- Text only from an **approved template**. Messages sent in the owner's name → **draft** for approval, never a direct send without an explicit request.
+- Gmail: MCP connector/API (draft → approval → send). Never through the browser.
+- **Official API first** where it exists: WhatsApp Business Platform (Cloud API), Instagram Graph API / Messaging API. They require a business account, Meta-approved templates and opt-in rules: check before using.
+- No API available: **conservative** automation with `browse` on the already signed-in session:
+  - human pace (one send at a time, minutes between sends), low daily cap, the client's business hours;
+  - **no mass sending**; one individual message per business;
+  - human approval of **each** send;
+  - **stop at the first warning** (action block, challenge, verification, captcha, "unusual activity") and hand off to a human. Do not retry, do not switch accounts.
+- **Real risk:** IG/WA automation can get the account blocked. Say so to whoever asks for the send.
+- Idempotency: before sending, check whether the video is already in the conversation. If it is, **do not resend**.
 
-## 10. Modelos, cache e reuso
+## 10. Templates, cache and reuse
 
-- **Hooks aprovados por setor**: reuse; não gere hook novo para cada cliente.
-- **Áudio TTS aprovado** (WAVs + `timing.lock.json`): refazer visual = **zero** TTS. O cache por hash evita chamada repetida.
-- **Presets visuais** por setor/país; render por template/contrato, nunca um LLM por vídeo.
-- **Trilha musical em rodízio:** nenhuma trilha se repete dentro de cada bloco de 15 vídeos (registre a trilha usada).
-- **Mensagens:** 1ª mensagem = `Your video is ready, here's the preview.` + mp4 (ou o modelo aprovado do idioma); **um** lembrete em D+3; **nunca preço** em mensagem proativa.
+- **Approved hooks per sector**: reuse them; do not write a new hook for every client.
+- **Approved TTS audio** (WAVs + `timing.lock.json`): redoing visuals = **zero** TTS. The hash cache prevents repeat calls.
+- **Visual presets** per sector/country; render from a template/contract, never one LLM per video.
+- **Music rotation:** no track repeats within each block of 15 videos (record the track used).
+- **Messages:** 1st message = `Your video is ready, here's the preview.` + mp4 (or the approved template for that language); **one** reminder after 3 days; **never a price** in a proactive message.
 
-## 11. Guardas de cota e dinheiro (não negociável)
+## 11. Quota and money guardrails (non-negotiable)
 
-- **Nunca gaste crédito pago sem OK explícito do dono**: TTS além da cota, créditos de clipping, anúncios, renders pagos (Colab/Kaggle pago), compras.
-- Respeite arquivos de trava de cota (ex.: `/workspace/controle/tts-bloqueado-ate.txt`). Data futura = porta fechada.
-- Erro 429/cota: pare **todo** uso daquele recurso, grave a hora de retomada no arquivo de trava, siga com o que não depende dele.
-- Nunca troque de chave/projeto/conta para "contornar" cota. Nunca imprima nem copie credenciais.
+- **Never spend paid credits without the owner's explicit OK**: TTS beyond quota, clipping credits, ads, paid renders (paid Colab/Kaggle), purchases.
+- Respect quota lock files (e.g. `<control-dir>/tts-bloqueado-ate.txt`). A future date = closed door.
+- 429/quota error: stop **all** use of that resource, write the resume time to the lock file, continue with what does not depend on it.
+- Never switch keys/projects/accounts to "get around" a quota. Never print or copy credentials.
 
-## 12. Segurança barata de arquivos
+## 12. Cheap file safety
 
-- `--dry-run` primeiro em tudo que escreve. Teste em **cópia** (`/tmp/...`) antes do arquivo vivo.
-- Backup → escreve no temporário → troca atômica (`mv tmp final`).
-- Edição pequena (diff/linha) em vez de reescrever o arquivo inteiro.
-- Pegue lock antes de mexer em item compartilhado; solte ao terminar.
+- `--dry-run` first on everything that writes. Test on a **copy** (`/tmp/...`) before the live file.
+- Backup → write to a temp file → atomic swap (`mv tmp final`).
+- Small edits (diff/line) instead of rewriting the whole file.
+- Take a lock before touching a shared item; release it when done.
 
-## 13. Mensagens entre bots
+## 13. Bot-to-bot messages
 
-- Curta: `[Projeto/Item] o que mudou · o que preciso · onde está (caminho)`.
-- Sem repetir contexto: aponte o arquivo (`ver /workspace/controle/estado-fila.md §1.5`).
-- Prioridade só quando o destinatário **precisa agir**.
-- Junte vários itens numa mensagem só. Nada de mensagem só de "ok/recebido/obrigado".
-- Resumo em vez de transcrição; logs vão para arquivo, a mensagem leva o caminho.
+- Short: `[Project/Item] what changed · what I need · where it is (path)`.
+- No repeated context: point to the file (`see <control-dir>/<file>.md §1.5`).
+- Priority only when the recipient **must act**.
+- Batch several items into one message. No "ok/received/thanks"-only messages.
+- Summary instead of transcript; logs go to a file, the message carries the path.
 
-## 14. Modelo e delegação
+## 14. Model and delegation
 
-- Tarefa mecânica (renomear, registrar, rodar lote, formatar) → esforço baixo / modelo barato.
-- Esforço alto só para julgamento: aprovação, texto novo, exceção, decisão legal.
-- Trabalho longo (render, lote, upload grande) → background ou subagente; não segure o turno esperando.
+- Mechanical task (rename, record, run a batch, format) → low effort / cheap model.
+- High effort only for judgment: approval, new copy, exceptions, legal decisions.
+- Long work (render, batch, big upload) → background or subagent; do not hold the turn waiting.
 
-## 15. Métrica
+## 15. Metric
 
-Registre tokens/custo por tarefa quando possível:
+Log tokens/cost per task whenever possible:
 
 ```bash
 python3 scripts/token_log.py add --agent "<bot>" --task "render P0XX" \
-  --path script --tokens 1200 --cost 0.00 --notes "render local"
-python3 scripts/token_log.py summary   # total por caminho
+  --path script --tokens 1200 --cost 0.00 --notes "local render"
+python3 scripts/token_log.py summary   # totals per path
 ```
 
-Revise o resumo: se `computer-use` ou `browse` dominam, há script faltando (volte à seção 3).
+Review the summary: if `computer-use` or `browse` dominate, a script is missing (back to section 3).
 
-## 16. O que desperdiça tokens (anti-padrões)
+## 16. What wastes tokens (anti-patterns)
 
-- Abrir o navegador para algo que tem MCP/API/script.
-- Screenshot a cada clique; assistir vídeo para QA em vez de script.
-- `cat` de arquivo inteiro; reler o mesmo arquivo; colar logs na conversa.
-- Polling com `sleep` em loop.
-- Digitar lote campo a campo numa UI.
-- Gerar de novo o que está em cache (TTS, render, hook aprovado).
-- Mensagens longas entre bots repetindo contexto; acks vazios.
-- Fazer a mesma coisa à mão pela 3ª vez.
-- Modelo caro/esforço alto para tarefa mecânica.
-- Insistir num site que bloqueou (ou tentar evadir anti-bot) em vez de usar a API oficial ou chamar um humano.
+- Opening the browser for something that has an MCP/API/script.
+- A screenshot per click; watching a video for QA instead of a script.
+- `cat` of a whole file; re-reading the same file; pasting logs into the conversation.
+- Polling with `sleep` in a loop.
+- Typing a batch field by field into a UI.
+- Regenerating what is cached (TTS, render, approved hook).
+- Long bot-to-bot messages repeating context; empty acks.
+- Doing the same thing by hand for the 3rd time.
+- An expensive model/high effort for a mechanical task.
+- Insisting on a site that blocked you (or trying to evade anti-bot) instead of using the official API or calling a human.
 
-## 17. Fluxo de decisão
+## 17. Decision flow
 
 ```mermaid
 flowchart TD
-  A[Nova tarefa] --> B{Já fiz isso 2x?}
-  B -- sim --> S[Escrever/estender script + teste + runbook]
-  B -- não --> C{Script/CLI pronto?}
+  A[New task] --> B{Done this 2x already?}
+  B -- yes --> S[Write/extend script + test + runbook]
+  B -- no --> C{Ready script/CLI?}
   S --> C
-  C -- sim --> R[Rodar com --dry-run, depois real]
-  C -- não --> D{MCP / plugin / API?}
-  D -- sim --> R
-  D -- não --> E{browse CLI por texto/DOM?}
-  E -- sim --> R
-  E -- não --> F{Login, 2FA, captcha, bloqueio?}
-  F -- sim --> G[Computer use: objetivo fechado, poucos prints]
-  F -- não --> H[Parar e pedir ao bot dev um script]
-  R --> L[Registrar no token_log; relatar só falhas]
+  C -- yes --> R[Run with --dry-run, then for real]
+  C -- no --> D{MCP / plugin / API?}
+  D -- yes --> R
+  D -- no --> E{browse CLI by text/DOM?}
+  E -- yes --> R
+  E -- no --> F{Sign-in, 2FA, captcha, block?}
+  F -- yes --> G[Computer use: closed goal, few screenshots]
+  F -- no --> H[Stop and ask the dev bot for a script]
+  R --> L[Log in token_log; report failures only]
   G --> L
 ```
 
-## 18. Manutenção (regra permanente)
+## 18. Maintenance (permanent rule)
 
-Esta skill vale para **todos os bots, sempre**. Ela só funciona se ficar atualizada:
+This skill applies to **all bots, always**. It only works if it stays current:
 
-- Surgiu um caminho mais barato (script novo, conector MCP, API, plugin, flag nova de CLI)? **Atualize a skill**: abra um PR no repositório `grokbot-economy` com a mudança no `SKILL.md` e uma linha no `CHANGELOG.md` (data, o que mudou, por quê, economia estimada).
-- Caminho que ficou obsoleto ou quebrou: remova ou corrija no mesmo PR.
-- Mudança pequena e objetiva; nada de dados sensíveis (tokens, e-mails, telefones, IDs de arquivo, nomes de clientes, URLs internas). Use placeholders como `<DRIVE_FILE_ID>`.
-- Sem acesso ao GitHub? Peça ao bot dev ou ao coordenador para abrir o PR com o texto pronto.
+- A cheaper path showed up (new script, MCP connector, API, plugin, new CLI flag)? **Update the skill**: open a PR on the `grokbot-economy` repo changing `SKILL.md` plus one line in `CHANGELOG.md` (date, what changed, why, estimated savings).
+- A path became obsolete or broke: remove or fix it in the same PR.
+- Small, focused changes, in English; no sensitive data (tokens, emails, phone numbers, file IDs, client names, internal URLs). Use placeholders like `<DRIVE_FILE_ID>`.
+- No GitHub access? Ask the dev bot or the coordinator to open the PR with the ready text.

@@ -1,12 +1,13 @@
 # Changelog
 
-Toda mudança na skill entra aqui (regra de Manutenção, seção 18 do `SKILL.md`).
-Formato: `AAAA-MM-DD · o que mudou · por quê · economia estimada`.
+Every change to the skill goes here (Maintenance rule, section 18 of `SKILL.md`).
+Format: `YYYY-MM-DD · what changed · why · estimated savings`.
 
 ## 2026-10-02
-- Versão inicial da skill `grokbot-economy`: escada de custo, checklist antes do navegador, regra "vira script", lotes, leitura econômica, guardas de cota, mensagens entre bots, métrica (`scripts/token_log.py`), anti-padrões e fluxo de decisão.
-- Seção de ferramentas de automação de navegador (browse CLI, Browser Use, Playwright, Selenium) e proibição de ferramentas de evasão anti-bot em Instagram/WhatsApp.
-- Postura anti-bloqueio para IG/WhatsApp: API oficial primeiro; senão automação conservadora com aprovação humana de cada envio.
-- Regra permanente de Manutenção: caminho mais barato novo → PR neste repo + linha neste arquivo.
-- Exemplos rápidos (caro → barato) no `SKILL.md` §4 e `simplicio-video broll --check` antes de renderizar.
-- README em 15 idiomas no padrão dos outros repositórios do dono (`README.md` + `READMEs/README.<locale>.md`), banner em `assets/banner.png`.
+- Initial version of the `grokbot-economy` skill: cost ladder, pre-browser checklist, "turn it into a script" rule, batches, cheap reading, quota guardrails, bot-to-bot messages, metric (`scripts/token_log.py`), anti-patterns and decision flowchart.
+- Browser automation tools section (browse CLI, Browser Use, Playwright, Selenium) and a ban on anti-bot evasion tools for Instagram/WhatsApp.
+- Anti-block posture for IG/WhatsApp: official API first; otherwise conservative automation with human approval of every send.
+- Permanent Maintenance rule: new cheaper path → PR to this repo + a line in this file.
+- Quick cheap-vs-expensive examples in `SKILL.md` §4 and `simplicio-video broll --check` before rendering.
+- README in 15 languages following the owner's pattern in his other repos (`README.md` + `READMEs/README.<locale>.md`), banner at `assets/banner.png`.
+- Repo switched to English by default (owner's rule): `SKILL.md`, `CHANGELOG.md`, checklists and examples translated; only the README keeps translations.

@@ -55,7 +55,7 @@ If that file carries a "DO NOT DELIVER" warning, do not render or send.
 ## 5. Prospect batch
 
 ```text
-list.csv ──> fichas batch ──> voice batch ──> visual batch + render ──> failure-only report
+list.csv ──> fichas (prospect sheets) batch ──> voice batch ──> visual batch + render ──> failure-only report
 ```
 - One input CSV, one script per stage, every stage idempotent.
 - The voice batch respects the quota lock file and stops at the first 429.
