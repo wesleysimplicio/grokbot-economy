@@ -20,7 +20,7 @@ Step down a rung only when the one above cannot do it. Note why.
 
 | # | Path | Typical cost | Use for |
 |---|---|---|---|
-| 1 | Ready script/CLI (`fila.py`, `simplicio-video`, `pc.py`) | ~0 tokens beyond the command + short output | anything that already has a script |
+| 1 | Ready script/CLI (`queue.py`, `video-cli`, `board.py`) | ~0 tokens beyond the command + short output | anything that already has a script |
 | 2 | MCP connector (Drive, Gmail, GitHub, Calendar) | low, structured output | read/search/create in connected services |
 | 3 | Installed plugin/skill (e.g. `browse skills find <site>`) | low | ready-made third-party recipe |
 | 4 | Direct API (REST via `curl`/Python, `gh api`) | low/medium | when there is no MCP |
@@ -48,34 +48,36 @@ If any of 1–5 is "yes", **do not open the browser**.
 - Document it in the runbook (1 line: command + when to use it). An undocumented script does not exist for the next agent.
 - Prefer **extending** an existing script over creating a similar one.
 
-## 4. Scripts in our flow (real examples; check `--help` first)
+## 4. Scripts in our flow (examples; check `--help` first)
+
+Names here are generic. Map each one to the real script listed in your runbook.
 
 | Task | Ready path | Never |
 |---|---|---|
-| Control spreadsheet | `fila.py proximo --pais <country> --todos`, `fila.py ver P0XX`, `fila.py marcar P0XX --status "..." --obs "..."`, `fila.py lock/unlock` (the only way to edit it) | edit the spreadsheet by hand or with ad hoc openpyxl |
-| Record a step (spreadsheet + Paperclip together) | `registrar.py` (one command) | two separate manual records |
-| Coordination board (Paperclip) | `pc.py` (REST helper) | open the UI in the browser to comment |
-| Videos | `simplicio-video` (`validate`, `voice`, `render`, `broll <dir> --check` in seconds before rendering); the exact watermark-free final command lives in the prospect folder's `FINAL-COMANDO.md` | build a render command from memory |
-| Video QA | `qa_v2.sh` + **one** look at the contact sheet | watching the video several times / dozens of screenshots |
-| Drive / Gmail | `gapi.py` (OAuth: Drive upload, Gmail read-only) or the Drive/Gmail MCP connector, `UploadFile`/`DownloadFile` | Drive web in the browser |
+| Control spreadsheet | `queue.py next --country <country> --all`, `queue.py show <ITEM_ID>`, `queue.py mark <ITEM_ID> --status "..." --note "..."`, `queue.py lock/unlock` (the only way to edit it) | edit the spreadsheet by hand or with ad hoc openpyxl |
+| Record a step (spreadsheet + Paperclip together) | `record_step.py` (one command) | two separate manual records |
+| Coordination board (Paperclip) | `board.py` (REST helper) | open the UI in the browser to comment |
+| Videos | `video-cli` (`validate`, `voice`, `render`, `check <dir>` in seconds before rendering); the exact watermark-free final command lives in the item folder's `FINAL-COMMAND.md` | build a render command from memory |
+| Video QA | `qa.sh` + **one** look at the contact sheet | watching the video several times / dozens of screenshots |
+| Drive / Gmail | `google_api.py` (OAuth: Drive upload, Gmail read-only) or the Drive/Gmail MCP connector, `UploadFile`/`DownloadFile` | Drive web in the browser |
 
 If one of these does not exist on the box yet, use the next rung of the ladder and ask the dev bot to build it.
 
 ### Quick examples (❌ expensive → ✅ cheap; details in `examples/flows.md`)
 
-- **Spreadsheet:** ❌ open the xlsx/Sheets and edit cells → ✅ `fila.py marcar P0XX --status "..." --obs "..."` (or `registrar.py` for spreadsheet + board).
-- **Drive:** ❌ Drive web with screenshots → ✅ Drive connector search in `<DRIVE_FOLDER_ID>` (already there?) and `UploadFile`/`gapi.py` only if missing.
-- **Paperclip:** ❌ open the board in the browser → ✅ `pc.py` reads the last N comments and posts 1 line with the proof path.
-- **Video:** ❌ build the render by hand and watch it 3× → ✅ `broll --check`, then the exact command from `FINAL-COMANDO.md`, `qa_v2.sh` + 1 contact sheet.
+- **Spreadsheet:** ❌ open the xlsx/Sheets and edit cells → ✅ `queue.py mark <ITEM_ID> --status "..." --note "..."` (or `record_step.py` for spreadsheet + board).
+- **Drive:** ❌ Drive web with screenshots → ✅ Drive connector search in `<DRIVE_FOLDER_ID>` (already there?) and `UploadFile`/`google_api.py` only if missing.
+- **Paperclip:** ❌ open the board in the browser → ✅ `board.py` reads the last N comments and posts 1 line with the proof path.
+- **Video:** ❌ build the render by hand and watch it 3× → ✅ `video-cli check`, then the exact command from `FINAL-COMMAND.md`, `qa.sh` + 1 contact sheet.
 - **Gmail:** ❌ Gmail web → ✅ MCP connector: draft → human OK → send.
 - **IG/WhatsApp:** ❌ computer use clicking chat by chat → ✅ official API; without it, `browse` on the signed-in session, 1 approved send at a time.
 
 ## 5. Batches: CSV/JSON + script, never field by field
 
 - Build a CSV/JSON with every row and process it with a script. Never type field by field into a UI.
-- Prospect flow: `list.csv` → **fichas (prospect sheets) batch** → **voice batch** → **visual batch + render**.
+- Prospect flow: `list.csv` → **script cards batch** → **voice batch** → **visual batch + render**.
 - Stop at the first quota error; continue only with what does not depend on it.
-- Report **only failures** (`3/40 failed: P0XX voice 429, ...`), never the full list of successes.
+- Report **only failures** (`3/40 failed: <ITEM_ID> voice 429, ...`), never the full list of successes.
 
 ## 6. Read and search without waste
 
@@ -124,7 +126,7 @@ If one of these does not exist on the box yet, use the next rung of the ladder a
 ## 10. Templates, cache and reuse
 
 - **Approved hooks per sector**: reuse them; do not write a new hook for every client.
-- **Approved TTS audio** (WAVs + `timing.lock.json`): redoing visuals = **zero** TTS. The hash cache prevents repeat calls.
+- **Approved TTS audio** (WAVs + a timing lock file): redoing visuals = **zero** TTS. The hash cache prevents repeat calls.
 - **Visual presets** per sector/country; render from a template/contract, never one LLM per video.
 - **Music rotation:** no track repeats within each block of 15 videos (record the track used).
 - **Messages:** 1st message = `Your video is ready, here's the preview.` + mp4 (or the approved template for that language); **one** reminder after 3 days; **never a price** in a proactive message.
@@ -132,7 +134,7 @@ If one of these does not exist on the box yet, use the next rung of the ladder a
 ## 11. Quota and money guardrails (non-negotiable)
 
 - **Never spend paid credits without the owner's explicit OK**: TTS beyond quota, clipping credits, ads, paid renders (paid Colab/Kaggle), purchases.
-- Respect quota lock files (e.g. `<control-dir>/tts-bloqueado-ate.txt`). A future date = closed door.
+- Respect quota-lock files (e.g. a `<resource>-locked-until` file in the runbook folder). A future date = closed door.
 - 429/quota error: stop **all** use of that resource, write the resume time to the lock file, continue with what does not depend on it.
 - Never switch keys/projects/accounts to "get around" a quota. Never print or copy credentials.
 
@@ -146,7 +148,7 @@ If one of these does not exist on the box yet, use the next rung of the ladder a
 ## 13. Bot-to-bot messages
 
 - Short: `[Project/Item] what changed · what I need · where it is (path)`.
-- No repeated context: point to the file (`see <control-dir>/<file>.md §1.5`).
+- No repeated context: point to the file (`see <runbook-dir>/<file>.md §1.5`).
 - Priority only when the recipient **must act**.
 - Batch several items into one message. No "ok/received/thanks"-only messages.
 - Summary instead of transcript; logs go to a file, the message carries the path.
@@ -162,7 +164,7 @@ If one of these does not exist on the box yet, use the next rung of the ladder a
 Log tokens/cost per task whenever possible:
 
 ```bash
-python3 scripts/token_log.py add --agent "<bot>" --task "render P0XX" \
+python3 scripts/token_log.py add --agent "<bot>" --task "render <ITEM_ID>" \
   --path script --tokens 1200 --cost 0.00 --notes "local render"
 python3 scripts/token_log.py summary   # totals per path
 ```

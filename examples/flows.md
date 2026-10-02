@@ -2,64 +2,64 @@
 
 Real commands from our flow, with placeholders instead of sensitive data.
 Check `--help` before using them: flags may have changed. If they did, update this file (SKILL.md §18).
-CLI names and flags (`fila.py`, `--pais`, `marcar`...) are kept exactly as the tools define them.
+Script and CLI names are generic (`queue.py`, `record_step.py`, `board.py`, `google_api.py`, `video-cli`, `qa.sh`). Map each one to the real tool in your runbook.
 
-## 1. Control spreadsheet (`fila.py`)
+## 1. Control spreadsheet (`queue.py`)
 
 ❌ Expensive: open the spreadsheet in the browser, scroll, find the row, edit cell by cell, take screenshots.
 
 ✅ Cheap:
 ```bash
-F=<scripts-dir>/fila.py
-python3 $F proximo --pais <COUNTRY> --todos      # next actionable item and why the others are blocked
-python3 $F lock P0XX --agente "<bot>"
-python3 $F ver P0XX                              # only the row you need
-python3 $F marcar P0XX --status "<new status>" --obs "<1 line>" --agente "<bot>"   # backs up on its own
-python3 $F unlock P0XX
+Q=<scripts-dir>/queue.py
+python3 $Q next --country <COUNTRY> --all         # next actionable item and why the others are blocked
+python3 $Q lock <ITEM_ID> --agent "<bot>"
+python3 $Q show <ITEM_ID>                         # only the row you need
+python3 $Q mark <ITEM_ID> --status "<new status>" --note "<1 line>" --agent "<bot>"   # backs up on its own
+python3 $Q unlock <ITEM_ID>
 ```
-When `registrar.py` exists, use it to write spreadsheet + board in a single call.
-`fila.py` is the only way to edit the sales spreadsheet.
+When `record_step.py` exists, use it to write spreadsheet + board in a single call.
+`queue.py` is the only way to edit the sales spreadsheet.
 
-## 2. Drive (`gapi.py` / MCP connector)
+## 2. Drive (`google_api.py` / MCP connector)
 
 ❌ Expensive: Drive web UI, drag and drop, checking the folder with screenshots.
 
 ✅ Cheap:
-- Check whether it already exists (idempotency): Drive connector search with `parentId = '<DRIVE_FOLDER_ID>' and title contains 'P0XX'`.
-- Upload a **new** file: `UploadFile` (Drive connection, `destination.folderId = <DRIVE_FOLDER_ID>`) or `gapi.py` (OAuth) when available.
+- Check whether it already exists (idempotency): Drive connector search with `parentId = '<DRIVE_FOLDER_ID>' and title contains '<ITEM_ID>'`.
+- Upload a **new** file: `UploadFile` (Drive connection, `destination.folderId = <DRIVE_FOLDER_ID>`) or `google_api.py` (OAuth) when available.
 - Download: `DownloadFile` with `<DRIVE_FILE_ID>`.
 - New **version** of the same file (e.g. the master spreadsheet): follow the runbook procedure; do not create a duplicate file.
 
-## 3. Coordination board (Paperclip, `pc.py`)
+## 3. Coordination board (Paperclip, `board.py`)
 
 ❌ Expensive: open the UI, read the whole card, paste logs into a comment.
 
-✅ Cheap: `pc.py` to read the **last N** comments and post **one** short comment:
-`[<Project>/<COUNTRY>] P0XX: <what changed> · next: <step> · proof: <path>`. Logs go to a file; the comment carries the path.
+✅ Cheap: `board.py` to read the **last N** comments and post **one** short comment:
+`[<Project>/<COUNTRY>] <ITEM_ID>: <what changed> · next: <step> · proof: <path>`. Logs go to a file; the comment carries the path.
 
-## 4. Videos (`simplicio-video` + `FINAL-COMANDO.md`)
+## 4. Videos (`video-cli` + `FINAL-COMMAND.md`)
 
 ❌ Expensive: one LLM per video, building the render command from memory, watching the video several times.
 
 ✅ Cheap:
 ```bash
-simplicio-video validate <contract.yaml>
-simplicio-video voice    <contract.yaml>     # hash cache: lines already generated do not call the API
-simplicio-video broll    <prospect-dir> --check   # concept, plan, licenses and layout in seconds
-simplicio-video render   <contract.yaml>     # local backend, no cost
-bash <scripts-dir>/qa_v2.sh <prospect-dir>    # objective QA + one look at the contact sheet
+video-cli validate <contract.yaml>
+video-cli voice    <contract.yaml>     # hash cache: lines already generated do not call the API
+video-cli check    <item-dir>          # concept, plan, licenses and layout in seconds
+video-cli render   <contract.yaml>     # local backend, no cost
+bash <scripts-dir>/qa.sh <item-dir>    # objective QA + one look at the contact sheet
 ```
-Watermark-free final: run **exactly** the command in `<prospect-dir>/FINAL-COMANDO.md`.
+Watermark-free final: run **exactly** the command in `<item-dir>/FINAL-COMMAND.md`.
 If that file carries a "DO NOT DELIVER" warning, do not render or send.
 
 ## 5. Prospect batch
 
 ```text
-list.csv ──> fichas (prospect sheets) batch ──> voice batch ──> visual batch + render ──> failure-only report
+list.csv ──> script cards batch ──> voice batch ──> visual batch + render ──> failure-only report
 ```
 - One input CSV, one script per stage, every stage idempotent.
-- The voice batch respects the quota lock file and stops at the first 429.
-- Report: `37/40 ok · failed: P0XX voice 429 (resumes HH:MM), P0YY render: missing asset`.
+- The voice batch respects the quota-lock file and stops at the first 429.
+- Report: `37/40 ok · failed: <ITEM_ID> voice 429 (resumes HH:MM), <ITEM_ID_2> render: missing asset`.
 
 ## 6. Sends (Gmail, Instagram DM, WhatsApp Web)
 
@@ -80,4 +80,4 @@ A single reminder after 3 days. Never a price in a proactive message.
 
 ❌ "Hi! How are you? So, as we discussed before, the context is... (40 lines)"
 
-✅ `[Videos/<COUNTRY>] P0XX render ok, QA ok · need: owner OK to send · preview: <path> · priority: yes (send at HH:MM)`
+✅ `[Videos/<COUNTRY>] <ITEM_ID> render ok, QA ok · need: owner OK to send · preview: <path> · priority: yes (send at HH:MM)`

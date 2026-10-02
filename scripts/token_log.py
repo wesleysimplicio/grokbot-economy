@@ -2,7 +2,7 @@
 """token_log.py: append-only log of tokens/cost per task (CSV). Stdlib only, no network.
 
 Usage:
-  python3 scripts/token_log.py add --agent BOT --task "render P0XX" --path script \
+  python3 scripts/token_log.py add --agent BOT --task "render <ITEM_ID>" --path script \
       --tokens 1200 [--cost 0.0] [--notes "..."] [--file token-log.csv] [--dry-run]
   python3 scripts/token_log.py summary [--file token-log.csv]
   python3 scripts/token_log.py --selftest
