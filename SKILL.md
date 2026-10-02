@@ -63,7 +63,7 @@ Se um desses ainda não existir no box, use o próximo degrau da escada e peça 
 - Gere um CSV/JSON com todas as linhas e processe com um script. Nunca digite campo por campo numa UI.
 - Fluxo de prospects: `lista.csv` → **lote fichas** → **lote voz** → **lote visual + render**.
 - Pare no primeiro erro de cota; siga só com o que não depende dela.
-- Relate **só as falhas** (`3/40 falharam: P078 voz 429, ...`), nunca a lista inteira de sucessos.
+- Relate **só as falhas** (`3/40 falharam: P0XX voz 429, ...`), nunca a lista inteira de sucessos.
 
 ## 6. Ler e buscar sem desperdício
 
