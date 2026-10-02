@@ -1,4 +1,4 @@
 date,agent,task,path,est_tokens,cost_usd,notes
-2026-10-02T19:00-03:00,<bot>,fila.py proximo --pais <PAIS>,script,300,0.0000,example: ready-made path
+2026-10-02T19:00-03:00,<bot>,fila.py proximo --pais <COUNTRY>,script,300,0.0000,example: ready-made path
 2026-10-02T19:05-03:00,<bot>,upload preview v2,mcp,800,0.0000,example: Drive connector instead of the browser
 2026-10-02T19:20-03:00,<bot>,IG sign-in with 2FA,computer-use,6000,0.0000,example: the only justified use of screenshots
