@@ -26,7 +26,7 @@
 
 `grokbot-economy` 是为 Grok Bot 编写的 skill。Grok Bot 是一个 LLM 桌面助手，具备 shell、文件读取、MCP 连接器、插件、box 浏览器、`browse` CLI，以及基于截图的 computer use 子代理。这个 skill 要求 bot **用 LLM 来规划、审查和处理异常，用代码来执行**：重复的工作写成脚本，批量任务通过 CSV/JSON 处理，浏览器是最后手段，付费额度必须经所有者批准，bot 之间的消息保持简短。
 
-skill 本身（`SKILL.md`）和仓库的其余内容均为英文。只有本 README 翻译成 15 种语言。
+skill 本身（`SKILL.md`）和仓库的其余内容均为英文。只有本 README 有翻译：英文原文加 14 种译文。
 
 ## 安装
 

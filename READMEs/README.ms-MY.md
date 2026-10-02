@@ -26,7 +26,7 @@
 
 `grokbot-economy` ialah skill untuk Grok Bot, pembantu desktop berasaskan LLM dengan shell, bacaan fail, penyambung MCP, plugin, pelayar dalam box, CLI `browse` dan subejen computer use yang dipandu tangkapan skrin. Ia mengarahkan bot untuk **merancang, menyemak dan mengendalikan pengecualian dengan LLM, dan melaksanakan dengan kod**: kerja berulang menjadi skrip, kelompok diproses melalui CSV/JSON, pelayar ialah pilihan terakhir, kredit berbayar memerlukan kelulusan pemilik, dan mesej antara bot kekal ringkas.
 
-Skill itu sendiri (`SKILL.md`) dan selebihnya repositori ditulis dalam bahasa Inggeris. Hanya README ini diterjemahkan, ke dalam 15 bahasa.
+Skill itu sendiri (`SKILL.md`) dan selebihnya repositori ditulis dalam bahasa Inggeris. Hanya README ini diterjemahkan: 14 terjemahan serta versi asal bahasa Inggeris.
 
 ## Pemasangan
 

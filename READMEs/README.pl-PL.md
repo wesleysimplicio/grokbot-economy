@@ -26,7 +26,7 @@
 
 `grokbot-economy` to skill dla Grok Bota, desktopowego asystenta LLM z powłoką, odczytem plików, konektorami MCP, pluginami, przeglądarką w boxie, CLI `browse` i subagentami computer use sterowanymi zrzutami ekranu. Każe botowi **planować, sprawdzać i obsługiwać wyjątki przez LLM, a wykonywać kodem**: powtarzalna praca staje się skryptem, partie idą przez CSV/JSON, przeglądarka to ostateczność, płatne kredyty wymagają zgody właściciela, a wiadomości między botami są krótkie.
 
-Sama skill (`SKILL.md`) i reszta repozytorium są po angielsku. Tylko ten README jest przetłumaczony, na 15 języków.
+Sama skill (`SKILL.md`) i reszta repozytorium są po angielsku. Tylko ten README jest tłumaczony: 14 tłumaczeń plus angielski oryginał.
 
 ## Instalacja
 
