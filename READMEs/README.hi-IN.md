@@ -8,7 +8,7 @@
 <p align="center">
 <a href="https://github.com/wesleysimplicio/grokbot-economy/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/wesleysimplicio/grokbot-economy?style=flat-square" /></a>
 <img alt="Grok Bot skill" src="https://img.shields.io/badge/Grok%20Bot-skill-2fe6a0?style=flat-square" />
-<img alt="SKILL.md pt-BR" src="https://img.shields.io/badge/SKILL.md-pt--BR-0ea5e9?style=flat-square" />
+<img alt="SKILL.md English" src="https://img.shields.io/badge/SKILL.md-English-0ea5e9?style=flat-square" />
 <a href="../LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-yellow?style=flat-square" /></a>
 </p>
 
@@ -26,7 +26,7 @@
 
 `grokbot-economy` Grok Bot के लिए एक skill है। Grok Bot एक LLM डेस्कटॉप सहायक है जिसके पास shell, फ़ाइल पढ़ने की सुविधा, MCP कनेक्टर, प्लगइन, box ब्राउज़र, `browse` CLI और स्क्रीनशॉट से चलने वाले computer use सबएजेंट हैं। यह skill bot से कहती है कि **योजना, समीक्षा और अपवाद LLM से संभालो, और काम कोड से करवाओ**: दोहराया जाने वाला काम स्क्रिप्ट बनता है, बैच CSV/JSON से चलते हैं, ब्राउज़र आख़िरी विकल्प है, पेड क्रेडिट के लिए मालिक की मंज़ूरी ज़रूरी है, और bot-से-bot संदेश छोटे रहते हैं।
 
-skill ख़ुद (`SKILL.md`) टीम की कामकाजी भाषा, ब्राज़ीलियाई पुर्तगाली, में लिखी गई है। यह README 15 भाषाओं में उपलब्ध है।
+skill ख़ुद (`SKILL.md`) और रिपॉज़िटरी का बाकी हिस्सा अंग्रेज़ी में है। सिर्फ़ यह README 15 भाषाओं में अनुवादित है।
 
 ## इंस्टॉल करें
 
@@ -70,9 +70,9 @@ skill ख़ुद (`SKILL.md`) टीम की कामकाजी भाष
 
 | फ़ाइल | क्या |
 |---|---|
-| [`SKILL.md`](../SKILL.md) | skill (PT-BR): लागत सीढ़ी, चेकलिस्ट, ब्राउज़र टूल के विकल्प, anti-patterns, निर्णय फ़्लोचार्ट, रखरखाव नियम |
+| [`SKILL.md`](../SKILL.md) | skill: लागत सीढ़ी, चेकलिस्ट, ब्राउज़र टूल के विकल्प, anti-patterns, निर्णय फ़्लोचार्ट, रखरखाव नियम |
 | [`CHANGELOG.md`](../CHANGELOG.md) | skill का हर बदलाव, कारण और अनुमानित बचत के साथ |
-| [`examples/fluxos.md`](../examples/fluxos.md) | ठोस फ़्लो: स्प्रेडशीट, Drive, समन्वय बोर्ड, वीडियो, बैच, भेजना |
+| [`examples/flows.md`](../examples/flows.md) | ठोस फ़्लो: स्प्रेडशीट, Drive, समन्वय बोर्ड, वीडियो, बैच, भेजना |
 | [`checklists/`](../checklists/) | ब्राउज़र से पहले, नई स्क्रिप्ट, Instagram/WhatsApp भेजना |
 | [`scripts/token_log.py`](../scripts/token_log.py) | हर काम के token/लागत का append-only लॉगर (stdlib, `--selftest`) |
 | [`templates/token-log.csv`](../templates/token-log.csv) | मेट्रिक टेम्पलेट (CSV हेडर + उदाहरण) |
@@ -92,7 +92,7 @@ python3 scripts/token_log.py --selftest && python3 -m unittest discover -s tests
 ## योगदान
 
 - कोई सस्ता रास्ता मिला (नई स्क्रिप्ट, कनेक्टर, API, प्लगइन, CLI फ़्लैग)? `SKILL.md` बदलने वाला PR खोलें **और** `CHANGELOG.md` में एक पंक्ति जोड़ें (तारीख़, क्या, क्यों, अनुमानित बचत)। यह सभी bots के लिए स्थायी नियम है।
-- `SKILL.md` को छोटा (< ~250 पंक्तियाँ), आदेशात्मक और PT-BR में रखें।
+- `SKILL.md` को छोटा (< ~250 पंक्तियाँ), आदेशात्मक और अंग्रेज़ी में रखें।
 - **सार्वजनिक repo:** कोई token, key, ईमेल, फ़ोन नंबर, क्लाइंट का नाम, फ़ाइल ID, hostname या आंतरिक URL नहीं। `<DRIVE_FILE_ID>` जैसे placeholder इस्तेमाल करें।
 - PR खोलने से पहले selftest और यूनिट टेस्ट चलाएँ।
 

@@ -8,7 +8,7 @@
 <p align="center">
 <a href="https://github.com/wesleysimplicio/grokbot-economy/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/wesleysimplicio/grokbot-economy?style=flat-square" /></a>
 <img alt="Grok Bot skill" src="https://img.shields.io/badge/Grok%20Bot-skill-2fe6a0?style=flat-square" />
-<img alt="SKILL.md pt-BR" src="https://img.shields.io/badge/SKILL.md-pt--BR-0ea5e9?style=flat-square" />
+<img alt="SKILL.md English" src="https://img.shields.io/badge/SKILL.md-English-0ea5e9?style=flat-square" />
 <a href="../LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-yellow?style=flat-square" /></a>
 </p>
 
@@ -26,7 +26,7 @@
 
 `grokbot-economy` es una skill para Grok Bot, un asistente de escritorio con LLM que tiene shell, lectura de archivos, conectores MCP, plugins, un navegador en el box, el CLI `browse` y subagentes de computer use guiados por capturas de pantalla. Le indica al bot **planificar, revisar y gestionar excepciones con el LLM, y ejecutar con código**: el trabajo repetido se convierte en script, los lotes pasan por CSV/JSON, el navegador es el último recurso, los créditos de pago necesitan el OK del dueño y los mensajes entre bots son breves.
 
-La skill en sí (`SKILL.md`) está escrita en portugués de Brasil, el idioma de trabajo del equipo. Este README está disponible en 15 idiomas.
+La skill en sí (`SKILL.md`) y el resto del repositorio están en inglés. Solo este README está traducido, a 15 idiomas.
 
 ## Instalación
 
@@ -70,9 +70,9 @@ Después, invócala con `/grokbot-economy` o menciónala en rutinas. Su descripc
 
 | Archivo | Qué es |
 |---|---|
-| [`SKILL.md`](../SKILL.md) | La skill (PT-BR): escalera de coste, checklists, herramientas de navegador, antipatrones, diagrama de decisión, regla de mantenimiento |
+| [`SKILL.md`](../SKILL.md) | La skill: escalera de coste, checklists, herramientas de navegador, antipatrones, diagrama de decisión, regla de mantenimiento |
 | [`CHANGELOG.md`](../CHANGELOG.md) | Cada cambio en la skill, con el motivo y el ahorro estimado |
-| [`examples/fluxos.md`](../examples/fluxos.md) | Flujos concretos: hoja de cálculo, Drive, tablero de coordinación, vídeos, lotes, envíos |
+| [`examples/flows.md`](../examples/flows.md) | Flujos concretos: hoja de cálculo, Drive, tablero de coordinación, vídeos, lotes, envíos |
 | [`checklists/`](../checklists/) | Antes del navegador, script nuevo, envío por Instagram/WhatsApp |
 | [`scripts/token_log.py`](../scripts/token_log.py) | Logger append-only de tokens/coste por tarea (stdlib, `--selftest`) |
 | [`templates/token-log.csv`](../templates/token-log.csv) | Plantilla de la métrica (cabecera CSV + ejemplos) |
@@ -92,7 +92,7 @@ python3 scripts/token_log.py --selftest && python3 -m unittest discover -s tests
 ## Contribuir
 
 - ¿Encontraste un camino más barato (script nuevo, conector, API, plugin, flag de CLI)? Abre un PR que cambie `SKILL.md` **y** añade una línea a `CHANGELOG.md` (fecha, qué, por qué, ahorro estimado). Es una regla permanente para todos los bots.
-- Mantén `SKILL.md` corto (< ~250 líneas), imperativo y en PT-BR.
+- Mantén `SKILL.md` corto (< ~250 líneas), imperativo y en inglés.
 - **Repo público:** nada de tokens, claves, correos, teléfonos, nombres de clientes, IDs de archivos, hostnames ni URLs internas. Usa placeholders como `<DRIVE_FILE_ID>`.
 - Ejecuta el selftest y los tests unitarios antes de abrir el PR.
 

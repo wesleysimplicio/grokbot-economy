@@ -8,7 +8,7 @@
 <p align="center">
 <a href="https://github.com/wesleysimplicio/grokbot-economy/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/wesleysimplicio/grokbot-economy?style=flat-square" /></a>
 <img alt="Grok Bot skill" src="https://img.shields.io/badge/Grok%20Bot-skill-2fe6a0?style=flat-square" />
-<img alt="SKILL.md pt-BR" src="https://img.shields.io/badge/SKILL.md-pt--BR-0ea5e9?style=flat-square" />
+<img alt="SKILL.md English" src="https://img.shields.io/badge/SKILL.md-English-0ea5e9?style=flat-square" />
 <a href="../LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-yellow?style=flat-square" /></a>
 </p>
 
@@ -26,7 +26,7 @@
 
 `grokbot-economy` — это skill для Grok Bot, настольного LLM-ассистента с shell, чтением файлов, MCP-коннекторами, плагинами, браузером в box, CLI `browse` и субагентами computer use, управляемыми скриншотами. Она велит боту **планировать, проверять и разбирать исключения с помощью LLM, а выполнять кодом**: повторяющаяся работа становится скриптом, пакеты идут через CSV/JSON, браузер — последнее средство, платные кредиты требуют согласия владельца, а сообщения между ботами остаются короткими.
 
-Сама skill (`SKILL.md`) написана на бразильском португальском — рабочем языке команды. Этот README доступен на 15 языках.
+Сама skill (`SKILL.md`) и остальная часть репозитория написаны на английском. Переведён только этот README — на 15 языков.
 
 ## Установка
 
@@ -70,9 +70,9 @@
 
 | Файл | Что |
 |---|---|
-| [`SKILL.md`](../SKILL.md) | Сама skill (PT-BR): лестница затрат, чек-листы, инструменты браузера, антипаттерны, схема принятия решений, правило сопровождения |
+| [`SKILL.md`](../SKILL.md) | Сама skill: лестница затрат, чек-листы, инструменты браузера, антипаттерны, схема принятия решений, правило сопровождения |
 | [`CHANGELOG.md`](../CHANGELOG.md) | Каждое изменение skill с причиной и оценкой экономии |
-| [`examples/fluxos.md`](../examples/fluxos.md) | Конкретные сценарии: таблица, Drive, доска координации, видео, пакеты, отправки |
+| [`examples/flows.md`](../examples/flows.md) | Конкретные сценарии: таблица, Drive, доска координации, видео, пакеты, отправки |
 | [`checklists/`](../checklists/) | Перед браузером, новый скрипт, отправка в Instagram/WhatsApp |
 | [`scripts/token_log.py`](../scripts/token_log.py) | Append-only логгер токенов/стоимости по задачам (stdlib, `--selftest`) |
 | [`templates/token-log.csv`](../templates/token-log.csv) | Шаблон метрики (заголовок CSV + примеры) |
@@ -92,7 +92,7 @@ python3 scripts/token_log.py --selftest && python3 -m unittest discover -s tests
 ## Участие
 
 - Нашли более дешёвый путь (новый скрипт, коннектор, API, плагин, флаг CLI)? Откройте PR с изменением `SKILL.md` **и** добавьте строку в `CHANGELOG.md` (дата, что, почему, оценка экономии). Это постоянное правило для всех ботов.
-- Держите `SKILL.md` коротким (< ~250 строк), в повелительном наклонении и на PT-BR.
+- Держите `SKILL.md` коротким (< ~250 строк), в повелительном наклонении и на английском.
 - **Публичный репозиторий:** никаких токенов, ключей, e-mail, телефонов, имён клиентов, ID файлов, hostname или внутренних URL. Используйте плейсхолдеры вроде `<DRIVE_FILE_ID>`.
 - Перед открытием PR запустите selftest и юнит-тесты.
 

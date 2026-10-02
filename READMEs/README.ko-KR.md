@@ -8,7 +8,7 @@
 <p align="center">
 <a href="https://github.com/wesleysimplicio/grokbot-economy/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/wesleysimplicio/grokbot-economy?style=flat-square" /></a>
 <img alt="Grok Bot skill" src="https://img.shields.io/badge/Grok%20Bot-skill-2fe6a0?style=flat-square" />
-<img alt="SKILL.md pt-BR" src="https://img.shields.io/badge/SKILL.md-pt--BR-0ea5e9?style=flat-square" />
+<img alt="SKILL.md English" src="https://img.shields.io/badge/SKILL.md-English-0ea5e9?style=flat-square" />
 <a href="../LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-yellow?style=flat-square" /></a>
 </p>
 
@@ -26,7 +26,7 @@
 
 `grokbot-economy`는 Grok Bot을 위한 skill입니다. Grok Bot은 shell, 파일 읽기, MCP 커넥터, 플러그인, box 브라우저, `browse` CLI, 스크린샷 기반 computer use 서브에이전트를 갖춘 LLM 데스크톱 어시스턴트입니다. 이 skill은 bot에게 **계획, 검토, 예외 처리는 LLM으로, 실행은 코드로** 하라고 지시합니다. 반복 작업은 스크립트가 되고, 배치는 CSV/JSON으로 처리하며, 브라우저는 최후의 수단이고, 유료 크레딧은 소유자의 승인이 필요하며, bot 간 메시지는 짧게 유지합니다.
 
-skill 자체(`SKILL.md`)는 팀의 업무 언어인 브라질 포르투갈어로 작성되어 있습니다. 이 README는 15개 언어로 제공됩니다.
+skill 자체(`SKILL.md`)와 저장소의 나머지 파일은 영어로 작성되어 있습니다. 이 README만 15개 언어로 번역됩니다.
 
 ## 설치
 
@@ -70,9 +70,9 @@ skill 자체(`SKILL.md`)는 팀의 업무 언어인 브라질 포르투갈어로
 
 | 파일 | 내용 |
 |---|---|
-| [`SKILL.md`](../SKILL.md) | skill 본문(PT-BR): 비용 사다리, 체크리스트, 브라우저 도구 선택지, 안티패턴, 의사결정 흐름도, 유지보수 규칙 |
+| [`SKILL.md`](../SKILL.md) | skill 본문: 비용 사다리, 체크리스트, 브라우저 도구 선택지, 안티패턴, 의사결정 흐름도, 유지보수 규칙 |
 | [`CHANGELOG.md`](../CHANGELOG.md) | skill의 모든 변경 사항(이유와 예상 절감량 포함) |
-| [`examples/fluxos.md`](../examples/fluxos.md) | 구체적인 흐름: 스프레드시트, Drive, 조정 보드, 영상, 배치, 전송 |
+| [`examples/flows.md`](../examples/flows.md) | 구체적인 흐름: 스프레드시트, Drive, 조정 보드, 영상, 배치, 전송 |
 | [`checklists/`](../checklists/) | 브라우저 전, 새 스크립트, Instagram/WhatsApp 전송 |
 | [`scripts/token_log.py`](../scripts/token_log.py) | 작업별 토큰/비용 추가 전용 로거(stdlib, `--selftest`) |
 | [`templates/token-log.csv`](../templates/token-log.csv) | 지표 템플릿(CSV 헤더 + 예시) |
@@ -92,7 +92,7 @@ python3 scripts/token_log.py --selftest && python3 -m unittest discover -s tests
 ## 기여하기
 
 - 더 저렴한 경로(새 스크립트, 커넥터, API, 플러그인, CLI 플래그)를 찾았나요? `SKILL.md`를 수정하는 PR을 열고 **동시에** `CHANGELOG.md`에 한 줄(날짜, 내용, 이유, 예상 절감량)을 추가하세요. 모든 bot에 적용되는 영구 규칙입니다.
-- `SKILL.md`는 짧게(약 250줄 미만), 명령형으로, PT-BR로 유지하세요.
+- `SKILL.md`는 짧게(약 250줄 미만), 명령형으로, 영어로 유지하세요.
 - **공개 저장소:** 토큰, 키, 이메일, 전화번호, 고객 이름, 파일 ID, 호스트명, 내부 URL을 넣지 마세요. `<DRIVE_FILE_ID>` 같은 플레이스홀더를 사용하세요.
 - PR을 열기 전에 selftest와 단위 테스트를 실행하세요.
 

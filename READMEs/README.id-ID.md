@@ -8,7 +8,7 @@
 <p align="center">
 <a href="https://github.com/wesleysimplicio/grokbot-economy/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/wesleysimplicio/grokbot-economy?style=flat-square" /></a>
 <img alt="Grok Bot skill" src="https://img.shields.io/badge/Grok%20Bot-skill-2fe6a0?style=flat-square" />
-<img alt="SKILL.md pt-BR" src="https://img.shields.io/badge/SKILL.md-pt--BR-0ea5e9?style=flat-square" />
+<img alt="SKILL.md English" src="https://img.shields.io/badge/SKILL.md-English-0ea5e9?style=flat-square" />
 <a href="../LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-yellow?style=flat-square" /></a>
 </p>
 
@@ -26,7 +26,7 @@
 
 `grokbot-economy` adalah skill untuk Grok Bot, asisten desktop berbasis LLM dengan shell, pembacaan file, konektor MCP, plugin, browser di box, CLI `browse`, dan subagen computer use berbasis screenshot. Skill ini menyuruh bot **merencanakan, meninjau, dan menangani pengecualian dengan LLM, lalu mengeksekusi dengan kode**: pekerjaan berulang menjadi skrip, batch diproses lewat CSV/JSON, browser adalah pilihan terakhir, kredit berbayar butuh persetujuan pemilik, dan pesan antarbot tetap singkat.
 
-Skill itu sendiri (`SKILL.md`) ditulis dalam bahasa Portugis Brasil, bahasa kerja tim. README ini tersedia dalam 15 bahasa.
+Skill itu sendiri (`SKILL.md`) dan bagian lain repositori ditulis dalam bahasa Inggris. Hanya README ini yang diterjemahkan, ke 15 bahasa.
 
 ## Instalasi
 
@@ -70,9 +70,9 @@ Lalu panggil dengan `/grokbot-economy` atau sebut dalam rutinitas. Deskripsinya 
 
 | File | Isi |
 |---|---|
-| [`SKILL.md`](../SKILL.md) | Skill (PT-BR): tangga biaya, checklist, opsi alat browser, anti-pola, diagram keputusan, aturan pemeliharaan |
+| [`SKILL.md`](../SKILL.md) | Skill: tangga biaya, checklist, opsi alat browser, anti-pola, diagram keputusan, aturan pemeliharaan |
 | [`CHANGELOG.md`](../CHANGELOG.md) | Setiap perubahan skill, dengan alasan dan perkiraan penghematan |
-| [`examples/fluxos.md`](../examples/fluxos.md) | Alur konkret: spreadsheet, Drive, papan koordinasi, video, batch, pengiriman |
+| [`examples/flows.md`](../examples/flows.md) | Alur konkret: spreadsheet, Drive, papan koordinasi, video, batch, pengiriman |
 | [`checklists/`](../checklists/) | Sebelum browser, skrip baru, pengiriman Instagram/WhatsApp |
 | [`scripts/token_log.py`](../scripts/token_log.py) | Logger append-only token/biaya per tugas (stdlib, `--selftest`) |
 | [`templates/token-log.csv`](../templates/token-log.csv) | Templat metrik (header CSV + contoh) |
@@ -92,7 +92,7 @@ python3 scripts/token_log.py --selftest && python3 -m unittest discover -s tests
 ## Berkontribusi
 
 - Menemukan jalur yang lebih murah (skrip baru, konektor, API, plugin, flag CLI)? Buka PR yang mengubah `SKILL.md` **dan** tambahkan satu baris ke `CHANGELOG.md` (tanggal, apa, mengapa, perkiraan penghematan). Ini aturan permanen untuk semua bot.
-- Jaga `SKILL.md` tetap singkat (< ~250 baris), imperatif, dan dalam PT-BR.
+- Jaga `SKILL.md` tetap singkat (< ~250 baris), imperatif, dan dalam bahasa Inggris.
 - **Repo publik:** tanpa token, kunci, email, nomor telepon, nama klien, ID file, hostname, atau URL internal. Gunakan placeholder seperti `<DRIVE_FILE_ID>`.
 - Jalankan selftest dan tes unit sebelum membuka PR.
 

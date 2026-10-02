@@ -8,7 +8,7 @@
 <p align="center">
 <a href="https://github.com/wesleysimplicio/grokbot-economy/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/wesleysimplicio/grokbot-economy?style=flat-square" /></a>
 <img alt="Grok Bot skill" src="https://img.shields.io/badge/Grok%20Bot-skill-2fe6a0?style=flat-square" />
-<img alt="SKILL.md pt-BR" src="https://img.shields.io/badge/SKILL.md-pt--BR-0ea5e9?style=flat-square" />
+<img alt="SKILL.md English" src="https://img.shields.io/badge/SKILL.md-English-0ea5e9?style=flat-square" />
 <a href="../LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-yellow?style=flat-square" /></a>
 </p>
 
@@ -26,7 +26,7 @@
 
 `grokbot-economy` היא skill עבור Grok Bot, עוזר שולחני מבוסס LLM עם shell, קריאת קבצים, מחברי MCP, תוספים, דפדפן ב-box, ה-CLI ‏`browse` ותת-סוכני computer use המונעים בצילומי מסך. היא מורה ל-bot **לתכנן, לבדוק ולטפל בחריגים בעזרת ה-LLM, ולבצע בעזרת קוד**: עבודה חוזרת הופכת לסקריפט, אצוות עוברות דרך CSV/JSON, הדפדפן הוא המוצא האחרון, קרדיטים בתשלום דורשים אישור של הבעלים, והודעות בין bots נשארות קצרות.
 
-ה-skill עצמה (`SKILL.md`) כתובה בפורטוגזית ברזילאית, שפת העבודה של הצוות. ה-README הזה זמין ב-15 שפות.
+ה-skill עצמה (`SKILL.md`) ושאר המאגר כתובים באנגלית. רק ה-README הזה מתורגם, ל-15 שפות.
 
 ## התקנה
 
@@ -70,9 +70,9 @@
 
 | קובץ | מה |
 |---|---|
-| [`SKILL.md`](../SKILL.md) | ה-skill ‏(PT-BR): סולם עלויות, צ'קליסטים, אפשרויות כלי דפדפן, אנטי-דפוסים, תרשים החלטה, כלל תחזוקה |
+| [`SKILL.md`](../SKILL.md) | ה-skill: סולם עלויות, צ'קליסטים, אפשרויות כלי דפדפן, אנטי-דפוסים, תרשים החלטה, כלל תחזוקה |
 | [`CHANGELOG.md`](../CHANGELOG.md) | כל שינוי ב-skill, עם הסיבה והחיסכון המשוער |
-| [`examples/fluxos.md`](../examples/fluxos.md) | תהליכים מעשיים: גיליון, Drive, לוח תיאום, סרטונים, אצוות, שליחות |
+| [`examples/flows.md`](../examples/flows.md) | תהליכים מעשיים: גיליון, Drive, לוח תיאום, סרטונים, אצוות, שליחות |
 | [`checklists/`](../checklists/) | לפני הדפדפן, סקריפט חדש, שליחה ב-Instagram/WhatsApp |
 | [`scripts/token_log.py`](../scripts/token_log.py) | לוגר append-only של טוקנים/עלות לכל משימה (stdlib, `--selftest`) |
 | [`templates/token-log.csv`](../templates/token-log.csv) | תבנית המדד (כותרת CSV + דוגמאות) |
@@ -92,7 +92,7 @@ python3 scripts/token_log.py --selftest && python3 -m unittest discover -s tests
 ## תרומה
 
 - מצאתם מסלול זול יותר (סקריפט חדש, מחבר, API, תוסף, דגל CLI)? פתחו PR שמשנה את `SKILL.md` **והוסיפו** שורה ל-`CHANGELOG.md` (תאריך, מה, למה, חיסכון משוער). זה כלל קבוע לכל ה-bots.
-- שמרו על `SKILL.md` קצר (פחות מ-~250 שורות), בלשון ציווי וב-PT-BR.
+- שמרו על `SKILL.md` קצר (פחות מ-~250 שורות), בלשון ציווי ובאנגלית.
 - **מאגר ציבורי:** בלי טוקנים, מפתחות, כתובות מייל, מספרי טלפון, שמות לקוחות, מזהי קבצים, שמות שרתים או כתובות פנימיות. השתמשו בממלאי מקום כמו `<DRIVE_FILE_ID>`.
 - הריצו את ה-selftest ואת בדיקות היחידה לפני פתיחת ה-PR.
 

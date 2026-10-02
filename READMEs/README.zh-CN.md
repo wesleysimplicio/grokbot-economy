@@ -8,7 +8,7 @@
 <p align="center">
 <a href="https://github.com/wesleysimplicio/grokbot-economy/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/wesleysimplicio/grokbot-economy?style=flat-square" /></a>
 <img alt="Grok Bot skill" src="https://img.shields.io/badge/Grok%20Bot-skill-2fe6a0?style=flat-square" />
-<img alt="SKILL.md pt-BR" src="https://img.shields.io/badge/SKILL.md-pt--BR-0ea5e9?style=flat-square" />
+<img alt="SKILL.md English" src="https://img.shields.io/badge/SKILL.md-English-0ea5e9?style=flat-square" />
 <a href="../LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-yellow?style=flat-square" /></a>
 </p>
 
@@ -26,7 +26,7 @@
 
 `grokbot-economy` 是为 Grok Bot 编写的 skill。Grok Bot 是一个 LLM 桌面助手，具备 shell、文件读取、MCP 连接器、插件、box 浏览器、`browse` CLI，以及基于截图的 computer use 子代理。这个 skill 要求 bot **用 LLM 来规划、审查和处理异常，用代码来执行**：重复的工作写成脚本，批量任务通过 CSV/JSON 处理，浏览器是最后手段，付费额度必须经所有者批准，bot 之间的消息保持简短。
 
-skill 本身（`SKILL.md`）使用团队的工作语言巴西葡萄牙语编写。本 README 提供 15 种语言版本。
+skill 本身（`SKILL.md`）和仓库的其余内容均为英文。只有本 README 翻译成 15 种语言。
 
 ## 安装
 
@@ -70,9 +70,9 @@ skill 本身（`SKILL.md`）使用团队的工作语言巴西葡萄牙语编写�
 
 | 文件 | 说明 |
 |---|---|
-| [`SKILL.md`](../SKILL.md) | skill 本体（PT-BR）：成本阶梯、检查清单、浏览器工具选择、反模式、决策流程图、维护规则 |
+| [`SKILL.md`](../SKILL.md) | skill 本体：成本阶梯、检查清单、浏览器工具选择、反模式、决策流程图、维护规则 |
 | [`CHANGELOG.md`](../CHANGELOG.md) | skill 的每次变更，附原因和预计节省 |
-| [`examples/fluxos.md`](../examples/fluxos.md) | 具体流程：电子表格、Drive、协作看板、视频、批量、发送 |
+| [`examples/flows.md`](../examples/flows.md) | 具体流程：电子表格、Drive、协作看板、视频、批量、发送 |
 | [`checklists/`](../checklists/) | 打开浏览器前、新脚本、Instagram/WhatsApp 发送 |
 | [`scripts/token_log.py`](../scripts/token_log.py) | 按任务记录 token/成本的只追加日志工具（stdlib，`--selftest`） |
 | [`templates/token-log.csv`](../templates/token-log.csv) | 指标模板（CSV 表头 + 示例） |
@@ -92,7 +92,7 @@ python3 scripts/token_log.py --selftest && python3 -m unittest discover -s tests
 ## 贡献
 
 - 发现了更便宜的路径（新脚本、连接器、API、插件、CLI 参数）？提交修改 `SKILL.md` 的 PR，**并**在 `CHANGELOG.md` 中加一行（日期、内容、原因、预计节省）。这是对所有 bot 的永久规则。
-- 保持 `SKILL.md` 简短（少于约 250 行）、使用祈使句、使用 PT-BR。
+- 保持 `SKILL.md` 简短（少于约 250 行）、使用祈使句、使用英文。
 - **公开仓库：** 不得包含 token、密钥、邮箱、电话号码、客户名称、文件 ID、主机名或内部 URL。使用 `<DRIVE_FILE_ID>` 之类的占位符。
 - 提交 PR 前运行 selftest 和单元测试。
 

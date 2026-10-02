@@ -8,7 +8,7 @@
 <p align="center">
 <a href="https://github.com/wesleysimplicio/grokbot-economy/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/wesleysimplicio/grokbot-economy?style=flat-square" /></a>
 <img alt="Grok Bot skill" src="https://img.shields.io/badge/Grok%20Bot-skill-2fe6a0?style=flat-square" />
-<img alt="SKILL.md pt-BR" src="https://img.shields.io/badge/SKILL.md-pt--BR-0ea5e9?style=flat-square" />
+<img alt="SKILL.md English" src="https://img.shields.io/badge/SKILL.md-English-0ea5e9?style=flat-square" />
 <a href="../LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-yellow?style=flat-square" /></a>
 </p>
 
@@ -26,7 +26,7 @@
 
 `grokbot-economy` هي skill لـ Grok Bot، وهو مساعد سطح مكتب يعمل بنموذج LLM ولديه shell وقراءة الملفات وموصلات MCP وإضافات ومتصفح داخل الـ box وأداة `browse` CLI ووكلاء فرعيون لـ computer use يعتمدون على لقطات الشاشة. توجّه الـ bot إلى **التخطيط والمراجعة ومعالجة الاستثناءات بالـ LLM، والتنفيذ بالكود**: العمل المتكرر يصبح سكربت، والدفعات تمر عبر CSV/JSON، والمتصفح هو الملاذ الأخير، والأرصدة المدفوعة تحتاج موافقة المالك، ورسائل الـ bots فيما بينها تبقى قصيرة.
 
-الـ skill نفسها (`SKILL.md`) مكتوبة بالبرتغالية البرازيلية، لغة عمل الفريق. هذا الـ README متاح بـ 15 لغة.
+الـ skill نفسها (`SKILL.md`) وبقية المستودع باللغة الإنجليزية. هذا الـ README وحده مترجم إلى 15 لغة.
 
 ## التثبيت
 
@@ -70,9 +70,9 @@
 
 | الملف | المحتوى |
 |---|---|
-| [`SKILL.md`](../SKILL.md) | الـ skill (PT-BR): سلّم التكلفة، قوائم التحقق، خيارات أدوات المتصفح، الأنماط المضادة، مخطط القرار، قاعدة الصيانة |
+| [`SKILL.md`](../SKILL.md) | الـ skill: سلّم التكلفة، قوائم التحقق، خيارات أدوات المتصفح، الأنماط المضادة، مخطط القرار، قاعدة الصيانة |
 | [`CHANGELOG.md`](../CHANGELOG.md) | كل تغيير على الـ skill مع السبب والتوفير المقدّر |
-| [`examples/fluxos.md`](../examples/fluxos.md) | تدفقات عملية: جدول البيانات، Drive، لوحة التنسيق، الفيديوهات، الدفعات، الإرسال |
+| [`examples/flows.md`](../examples/flows.md) | تدفقات عملية: جدول البيانات، Drive، لوحة التنسيق، الفيديوهات، الدفعات، الإرسال |
 | [`checklists/`](../checklists/) | قبل المتصفح، سكربت جديد، الإرسال عبر Instagram/WhatsApp |
 | [`scripts/token_log.py`](../scripts/token_log.py) | مسجّل append-only للتوكنات/التكلفة لكل مهمة (stdlib، `--selftest`) |
 | [`templates/token-log.csv`](../templates/token-log.csv) | قالب المقياس (ترويسة CSV + أمثلة) |
@@ -92,7 +92,7 @@ python3 scripts/token_log.py --selftest && python3 -m unittest discover -s tests
 ## المساهمة
 
 - وجدت مسارًا أرخص (سكربت جديد، موصل، API، إضافة، خيار CLI)؟ افتح PR يعدّل `SKILL.md` **وأضف** سطرًا إلى `CHANGELOG.md` (التاريخ، ماذا، لماذا، التوفير المقدّر). هذه قاعدة دائمة لكل الـ bots.
-- أبقِ `SKILL.md` قصيرًا (أقل من ~250 سطرًا)، بصيغة الأمر، وبالـ PT-BR.
+- أبقِ `SKILL.md` قصيرًا (أقل من ~250 سطرًا)، بصيغة الأمر، وبالإنجليزية.
 - **مستودع عام:** لا توكنات ولا مفاتيح ولا بريد إلكتروني ولا أرقام هواتف ولا أسماء عملاء ولا معرّفات ملفات ولا أسماء خوادم ولا روابط داخلية. استخدم عناصر نائبة مثل `<DRIVE_FILE_ID>`.
 - شغّل الـ selftest واختبارات الوحدة قبل فتح الـ PR.
 
