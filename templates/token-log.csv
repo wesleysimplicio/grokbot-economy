@@ -1,0 +1,4 @@
+date,agent,task,path,est_tokens,cost_usd,notes
+2026-10-02T19:00-03:00,<bot>,fila.py proximo --pais <PAIS>,script,300,0.0000,exemplo: caminho pronto
+2026-10-02T19:05-03:00,<bot>,upload preview v2,mcp,800,0.0000,exemplo: conector Drive em vez do navegador
+2026-10-02T19:20-03:00,<bot>,login IG com 2FA,computer-use,6000,0.0000,exemplo: único uso justificado de prints

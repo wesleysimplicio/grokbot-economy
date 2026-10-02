@@ -3,6 +3,6 @@ __pycache__/
 .venv/
 .env
 .env.*
-token-log.csv
+/token-log.csv
 *.log
 .DS_Store
